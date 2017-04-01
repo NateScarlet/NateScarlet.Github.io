@@ -3,7 +3,7 @@
 ## 教程资源
 
 * [Nuke官方教程_汉化版](Nuke\Written_Tutorials\index.html)
-* 伯里曼人体结构绘画教学(简体中文清晰版) [**PDF**(6M)](伯里曼人体结构绘画教学.pdf)  [**JPG**在线查看](http://pub.manshow.org/vol/4644) [百度网盘(JPG, 100M)](https://pan.baidu.com/share/link?shareid=3915609403&uk=3741681143)
+* 伯里曼人体结构绘画教学(简体中文清晰版) [**PDF**(13M)](伯里曼人体结构绘画教学.pdf)  [**JPG**在线查看](http://pub.manshow.org/vol/4644) [百度网盘(JPG, 100M)](https://pan.baidu.com/share/link?shareid=3915609403&uk=3741681143)
 
 ## 个人资料
 
