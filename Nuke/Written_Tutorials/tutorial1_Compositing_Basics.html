@@ -1,0 +1,211 @@
+<!doctype html>
+<html>
+<head>
+<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
+<title>tutorial1_Compositing_Basics.md</title><style type='text/css'>html, body {overflow-x: initial !important;}html { font-size: 14px; background-color: rgb(255, 255, 255); color: rgb(51, 51, 51); }
+body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; }
+a:active, a:hover { outline: 0px; }
+.in-text-selection, ::selection { background: rgb(181, 214, 252); text-shadow: none; }
+#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; word-wrap: break-word; position: relative; padding-bottom: 70px; white-space: pre-wrap; overflow-x: auto; }
+.for-image #write { padding-left: 8px; padding-right: 8px; }
+body.typora-export { padding-left: 30px; padding-right: 30px; }
+@media screen and (max-width: 500px) {
+  body.typora-export { padding-left: 0px; padding-right: 0px; }
+  .CodeMirror-sizer { margin-left: 0px !important; }
+  .CodeMirror-gutters { display: none !important; }
+}
+.typora-export #write { margin: 0px auto; }
+#write > p:first-child, #write > ul:first-child, #write > ol:first-child, #write > pre:first-child, #write > blockquote:first-child, #write > div:first-child, #write > table:first-child { margin-top: 30px; }
+#write li > table:first-child { margin-top: -20px; }
+img { max-width: 100%; vertical-align: middle; }
+input, button, select, textarea { color: inherit; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-size: inherit; line-height: inherit; font-family: inherit; }
+input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
+::before, ::after, * { box-sizing: border-box; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write div, #write pre { width: inherit; }
+#write p, #write h1, #write h2, #write h3, #write h4, #write h5, #write h6 { position: relative; }
+h1 { font-size: 2rem; }
+h2 { font-size: 1.8rem; }
+h3 { font-size: 1.6rem; }
+h4 { font-size: 1.4rem; }
+h5 { font-size: 1.2rem; }
+h6 { font-size: 1rem; }
+p { -webkit-margin-before: 1rem; -webkit-margin-after: 1rem; -webkit-margin-start: 0px; -webkit-margin-end: 0px; }
+.mathjax-block { margin-top: 0px; margin-bottom: 0px; -webkit-margin-before: 0rem; -webkit-margin-after: 0rem; }
+.hidden { display: none; }
+.md-blockmeta { color: rgb(204, 204, 204); font-weight: bold; font-style: italic; }
+a { cursor: pointer; }
+#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; margin: 4px 0px 0px; }
+tr { break-inside: avoid; break-after: auto; }
+thead { display: table-header-group; }
+table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
+table.md-table td { min-width: 80px; }
+.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
+.CodeMirror { text-align: left; }
+.CodeMirror-placeholder { opacity: 0.3; }
+.CodeMirror pre { padding: 0px 4px; }
+.CodeMirror-lines { padding: 0px; }
+div.hr:focus { cursor: none; }
+pre { white-space: pre-wrap; }
+.CodeMirror-gutters { margin-right: 4px; }
+.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
+.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
+.md-fences .CodeMirror.CodeMirror-wrap { top: -1.6em; margin-bottom: -1.6em; }
+.md-fences.mock-cm { white-space: pre-wrap; }
+.show-fences-line-number .md-fences { padding-left: 0px; }
+.show-fences-line-number .md-fences.mock-cm { padding-left: 40px; }
+.footnotes { opacity: 0.8; font-size: 0.9rem; padding-top: 1em; padding-bottom: 1em; }
+.footnotes + .footnotes { margin-top: -1em; }
+.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: transparent; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: normal; text-align: left; box-sizing: content-box; direction: ltr; }
+li div { padding-top: 0px; }
+blockquote { margin: 1rem 0px; }
+li p, li .mathjax-block { margin: 0.5rem 0px; }
+li { margin: 0px; position: relative; }
+blockquote > :last-child { margin-bottom: 0px; }
+blockquote > :first-child { margin-top: 0px; }
+.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; }
+@media print {
+  html, body { height: 100%; }
+  .typora-export * { -webkit-print-color-adjust: exact; }
+  h1, h2, h3, h4, h5, h6 { break-after: avoid-page; orphans: 2; }
+  p { orphans: 4; }
+  html.blink-to-pdf { font-size: 13px; }
+  .typora-export #write { padding-left: 1cm; padding-right: 1cm; }
+  .typora-export #write::after { height: 0px; }
+  @page { margin: 20mm 0mm; }
+}
+.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
+a img, img a { cursor: pointer; }
+pre.md-meta-block { font-size: 0.8rem; min-height: 2.86rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
+p .md-image:only-child { display: inline-block; width: 100%; text-align: center; }
+#write .MathJax_Display { margin: 0.8em 0px 0px; }
+.mathjax-block { white-space: pre; overflow: hidden; width: 100%; }
+p + .mathjax-block { margin-top: -1.143rem; }
+.mathjax-block:not(:empty)::after { display: none; }
+[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: none; box-shadow: none; }
+.task-list { list-style-type: none; }
+.task-list-item { position: relative; padding-left: 1em; }
+.task-list-item input { position: absolute; top: 0px; left: 0px; }
+.math { font-size: 1rem; }
+.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
+.md-toc-content { position: relative; margin-left: 0px; }
+.md-toc::after, .md-toc-content::after { display: none; }
+.md-toc-item { display: block; color: rgb(65, 131, 196); text-decoration: none; }
+.md-toc-inner:hover { }
+.md-toc-inner { display: inline-block; cursor: pointer; }
+.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: bold; }
+.md-toc-h2 .md-toc-inner { margin-left: 2em; }
+.md-toc-h3 .md-toc-inner { margin-left: 4em; }
+.md-toc-h4 .md-toc-inner { margin-left: 6em; }
+.md-toc-h5 .md-toc-inner { margin-left: 8em; }
+.md-toc-h6 .md-toc-inner { margin-left: 10em; }
+@media screen and (max-width: 48em) {
+  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
+  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
+  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
+  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
+}
+a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
+.footnote-line a:not(.reversefootnote) { color: inherit; }
+.md-attr { display: none; }
+.md-fn-count::after { content: "."; }
+.md-tag { opacity: 0.5; }
+.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: monospace; }
+code { text-align: left; }
+h1 .md-tag, h2 .md-tag, h3 .md-tag, h4 .md-tag, h5 .md-tag, h6 .md-tag { font-weight: initial; opacity: 0.35; }
+a.md-print-anchor { border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: none !important; background: transparent !important; text-decoration: initial !important; text-shadow: initial !important; }
+.md-inline-math .MathJax_SVG .noError { display: none !important; }
+.mathjax-block .MathJax_SVG_Display { text-align: center; margin: 1em 0em; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; display: block !important; }
+.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
+.MathJax_SVG .MJX-monospace { font-family: monospace; }
+.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
+.MathJax_SVG { display: inline; font-style: normal; font-weight: normal; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; word-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
+.MathJax_SVG * { transition: none; }
+
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: normal; src: local("Open Sans Regular"), url("./github/400.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: normal; src: local("Open Sans Italic"), url("./github/400i.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: bold; src: local("Open Sans Bold"), url("./github/700.woff") format("woff"); }
+@font-face { font-family: "Open Sans"; font-style: italic; font-weight: bold; src: local("Open Sans Bold Italic"), url("./github/700i.woff") format("woff"); }
+html { font-size: 16px; }
+body { font-family: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, sans-serif; color: rgb(51, 51, 51); line-height: 1.6; }
+#write { max-width: 860px; margin: 0px auto; padding: 20px 30px 100px; }
+#write > ul:first-child, #write > ol:first-child { margin-top: 30px; }
+body > :first-child { margin-top: 0px !important; }
+body > :last-child { margin-bottom: 0px !important; }
+a { color: rgb(65, 131, 196); }
+h1, h2, h3, h4, h5, h6 { position: relative; margin-top: 1rem; margin-bottom: 1rem; font-weight: bold; line-height: 1.4; cursor: text; }
+h1:hover a.anchor, h2:hover a.anchor, h3:hover a.anchor, h4:hover a.anchor, h5:hover a.anchor, h6:hover a.anchor { text-decoration: none; }
+h1 tt, h1 code { font-size: inherit; }
+h2 tt, h2 code { font-size: inherit; }
+h3 tt, h3 code { font-size: inherit; }
+h4 tt, h4 code { font-size: inherit; }
+h5 tt, h5 code { font-size: inherit; }
+h6 tt, h6 code { font-size: inherit; }
+h1 { padding-bottom: 0.3em; font-size: 2.25em; line-height: 1.2; border-bottom: 1px solid rgb(238, 238, 238); }
+h2 { padding-bottom: 0.3em; font-size: 1.75em; line-height: 1.225; border-bottom: 1px solid rgb(238, 238, 238); }
+h3 { font-size: 1.5em; line-height: 1.43; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1em; }
+h6 { font-size: 1em; color: rgb(119, 119, 119); }
+p, blockquote, ul, ol, dl, table { margin: 0.8em 0px; }
+li > ol, li > ul { margin: 0px; }
+hr { height: 4px; padding: 0px; margin: 16px 0px; background-color: rgb(231, 231, 231); border-width: 0px 0px 1px; border-style: none none solid; border-top-color: initial; border-right-color: initial; border-left-color: initial; border-image: initial; overflow: hidden; box-sizing: content-box; border-bottom-color: rgb(221, 221, 221); }
+body > h2:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child { margin-top: 0px; padding-top: 0px; }
+body > h1:first-child + h2 { margin-top: 0px; padding-top: 0px; }
+body > h3:first-child, body > h4:first-child, body > h5:first-child, body > h6:first-child { margin-top: 0px; padding-top: 0px; }
+a:first-child h1, a:first-child h2, a:first-child h3, a:first-child h4, a:first-child h5, a:first-child h6 { margin-top: 0px; padding-top: 0px; }
+h1 p, h2 p, h3 p, h4 p, h5 p, h6 p { margin-top: 0px; }
+li p.first { display: inline-block; }
+ul, ol { padding-left: 30px; }
+ul:first-child, ol:first-child { margin-top: 0px; }
+ul:last-child, ol:last-child { margin-bottom: 0px; }
+blockquote { border-left: 4px solid rgb(221, 221, 221); padding: 0px 15px; color: rgb(119, 119, 119); }
+blockquote blockquote { padding-right: 0px; }
+table { padding: 0px; word-break: initial; }
+table tr { border-top: 1px solid rgb(204, 204, 204); background-color: white; margin: 0px; padding: 0px; }
+table tr:nth-child(2n) { background-color: rgb(248, 248, 248); }
+table tr th { font-weight: bold; border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr td { border: 1px solid rgb(204, 204, 204); text-align: left; margin: 0px; padding: 6px 13px; }
+table tr th:first-child, table tr td:first-child { margin-top: 0px; }
+table tr th:last-child, table tr td:last-child { margin-bottom: 0px; }
+.CodeMirror-gutters { border-right: 1px solid rgb(221, 221, 221); }
+.md-fences, code, tt { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; }
+.md-fences { margin-bottom: 15px; margin-top: 15px; padding: 8px 1em 6px; }
+.task-list { padding-left: 0px; }
+.task-list-item { padding-left: 32px; }
+.task-list-item input { top: 3px; left: 8px; }
+@media screen and (min-width: 914px) {
+}
+@media print {
+  html { font-size: 13px; }
+  table, pre { break-inside: avoid; }
+  pre { word-wrap: break-word; }
+}
+.md-fences { background-color: rgb(248, 248, 248); }
+#write pre.md-meta-block { padding: 1rem; font-size: 85%; line-height: 1.45; background-color: rgb(247, 247, 247); border: 0px; border-radius: 3px; color: rgb(119, 119, 119); margin-top: 0px !important; }
+.mathjax-block > .code-tooltip { bottom: 0.375rem; }
+#write > h3.md-focus::before { left: -1.5625rem; top: 0.375rem; }
+#write > h4.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h5.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+#write > h6.md-focus::before { left: -1.5625rem; top: 0.285714rem; }
+.md-image > .md-meta { border: 1px solid rgb(221, 221, 221); border-radius: 3px; font-family: Consolas, "Liberation Mono", Courier, monospace; padding: 2px 4px 0px; font-size: 0.9em; color: inherit; }
+.md-tag { color: inherit; }
+.md-toc { margin-top: 20px; padding-bottom: 20px; }
+#typora-quick-open { border: 1px solid rgb(221, 221, 221); background-color: rgb(248, 248, 248); }
+#typora-quick-open-item { background-color: rgb(250, 250, 250); border-color: rgb(254, 254, 254) rgb(229, 229, 229) rgb(229, 229, 229) rgb(238, 238, 238); border-style: solid; border-width: 1px; }
+#md-notification::before { top: 10px; }
+.on-focus-mode blockquote { border-left-color: rgba(85, 85, 85, 0.117647); }
+header, .context-menu, .megamenu-content, footer { font-family: "Segoe UI", Arial, sans-serif; }
+
+
+
+
+
+
+</style>
+</head>
+<body class='typora-export' >
+<div  id='write'  class = 'is-node'><div class='md-toc' mdtype='toc'><p class="md-toc-content"><span class="md-toc-item md-toc-h1" data-ref="c9"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c9">教程1: 合成基础</a></span><span class="md-toc-item md-toc-h2" data-ref="c12"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c12">介绍</a></span><span class="md-toc-item md-toc-h2" data-ref="c22"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c22">启动Nuke</a></span><span class="md-toc-item md-toc-h3" data-ref="c25"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c25">在Windows下启动</a></span><span class="md-toc-item md-toc-h3" data-ref="c30"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c30">在Mac OSX下启动</a></span><span class="md-toc-item md-toc-h3" data-ref="c35"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c35">在Linux下启动</a></span><span class="md-toc-item md-toc-h2" data-ref="c49"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c49">使用工具栏</a></span><span class="md-toc-item md-toc-h2" data-ref="c52"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c52">使用菜单</a></span><span class="md-toc-item md-toc-h2" data-ref="c66"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c66">自定义你的工作区</a></span><span class="md-toc-item md-toc-h2" data-ref="c105"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c105">保存文件和文件备份</a></span><span class="md-toc-item md-toc-h3" data-ref="c108"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c108">设置文件/保存选项</a></span><span class="md-toc-item md-toc-h3" data-ref="c131"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c131">恢复备份文件</a></span><span class="md-toc-item md-toc-h3" data-ref="c139"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c139">关闭自动备份</a></span><span class="md-toc-item md-toc-h2" data-ref="c142"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c142">设置工程</a></span><span class="md-toc-item md-toc-h3" data-ref="c145"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c145">设置你的工程</a></span><span class="md-toc-item md-toc-h2" data-ref="c169"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c169">使用节点</a></span><span class="md-toc-item md-toc-h3" data-ref="c172"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c172">插入节点</a></span><span class="md-toc-item md-toc-h3" data-ref="c232"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c232">关于连接的提示</a></span><span class="md-toc-item md-toc-h2" data-ref="c270"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c270">导入图像序列</a></span><span class="md-toc-item md-toc-h3" data-ref="c273"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c273">读取图像的方法</a></span><span class="md-toc-item md-toc-h2" data-ref="c327"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c327">在窗口间导航</a></span><span class="md-toc-item md-toc-h3" data-ref="c330"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c330">移动视图</a></span><span class="md-toc-item md-toc-h3" data-ref="c340"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c340">缩放或扩大视图</a></span><span class="md-toc-item md-toc-h3" data-ref="c354"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c354">使用节点图概览</a></span><span class="md-toc-item md-toc-h3" data-ref="c361"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c361">在窗口中进行框显</a></span><span class="md-toc-item md-toc-h2" data-ref="c368"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c368">使用查看器</a></span><span class="md-toc-item md-toc-h3" data-ref="c377"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c377">在查看器中显示图像</a></span><span class="md-toc-item md-toc-h3" data-ref="c424"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c424">查看多个输入</a></span><span class="md-toc-item md-toc-h2" data-ref="c452"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c452">重新指定图像格式</a></span><span class="md-toc-item md-toc-h3" data-ref="c455"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c455">使图像适合工程分辨率</a></span><span class="md-toc-item md-toc-h2" data-ref="c473"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c473">使用代理和较低分辨率</a></span><span class="md-toc-item md-toc-h3" data-ref="c486"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c486">激活代理模式</a></span><span class="md-toc-item md-toc-h3" data-ref="c508"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c508">激活"低分辨率"模式</a></span><span class="md-toc-item md-toc-h2" data-ref="c520"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c520">合成图像</a></span><span class="md-toc-item md-toc-h3" data-ref="c525"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c525">将两个节点合成</a></span><span class="md-toc-item md-toc-h2" data-ref="c575"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c575">对图像进行校色</a></span><span class="md-toc-item md-toc-h2" data-ref="c597"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c597">对效果应用遮罩</a></span><span class="md-toc-item md-toc-h3" data-ref="c600"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c600">创建并应用贝塞尔遮罩</a></span><span class="md-toc-item md-toc-h2" data-ref="c629"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c629">创建动画书预览</a></span><span class="md-toc-item md-toc-h3" data-ref="c637"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c637">生成动画书</a></span><span class="md-toc-item md-toc-h2" data-ref="c654"><a class="md-toc-inner" style="cursor: pointer;" href="#header-c654">结语</a></span></p></div><p><a href='file:///C:/Program%20Files/Nuke10.0v4/Documentation/html/Default.html#getting_started/tutorial1/compositing_basics.html'>原文</a></p><h1><a name='header-c9' class='md-header-anchor '></a>教程1: 合成基础</h1><p>你好! 这个教程将向你介绍nuke, 你将创建一个简单的合成并且带你浏览过大部分的窗口, 屏幕上的控制, 和其他界面元素。</p><h2><a name='header-c12' class='md-header-anchor '></a>介绍</h2><p>我们听说在数字合成方面有许多人宁愿冒着冰雹前进也不愿看一下介绍教程。 显然, 那说的不是你。当你完成这个课程, 你将会很好的了解Nuke工作流而且应该产生了学习其他教程的自信。 </p><p><img src='./pic/tutorial1_1.png' alt='你在Nuke中的首个合成' /></p><p>在你进入工程之前, 我们先得进行几项管理上的设置 - 像是定义首选项和设置工程设置。 我们知道这些事没什么意思, 但是这些真的非常重要, 所以请耐心, 我们将尽快完成它。</p><blockquote><p><strong>提示</strong>: 如果你还未下载教程工程文件并将它放到你创建的Nuke_Tutorials文件夹, 到<a href='./index.html'>下载教程资源</a>获取指引。</p></blockquote><h2><a name='header-c22' class='md-header-anchor '></a>启动Nuke</h2><p>可能你的桌面上已经有了Nuke图标。 如果有的话, 双击启动它。 否则的话, 通过以下手段启动Nuke(假设你将Nuke安装在了默认位置)。</p><h3><a name='header-c25' class='md-header-anchor '></a>在Windows下启动</h3><ul><li>在<strong>开始</strong>菜单下, 选择<strong>所有程序</strong> &gt; <strong>The Foundry</strong> , 然后选择 <strong>Nuke10.0v4</strong>。</li></ul><h3><a name='header-c30' class='md-header-anchor '></a>在Mac OSX下启动</h3><ul><li>打开<strong>/Application/Nuke/</strong>文件夹然后双击<strong>Nuke10.0v4</strong>图标。</li></ul><h3><a name='header-c35' class='md-header-anchor '></a>在Linux下启动</h3><ul><li>打开<strong>/usr/local/Nuke/</strong>文件夹然后双击<strong>Nuke10.0v4</strong>图标。</li></ul><blockquote><p><strong>提示</strong>: 如果你在Linux下操作, 你也可以直接在终端的命令行中启动Nuke, 只要导航至Nuke文件夹并输入Nuke应用的名称</p></blockquote><p>将会有一个空的Nuke窗口出现。 分割线将窗口分割成不同的面板。 每个面板有一页或者多页, 通过面板顶部的标签分割。 主窗口的左边是工具栏。</p><p><img src='./pic/tutorial1_2.png' alt='' /></p><p>默认的面板设置下将会显示查看器(Viewer), 节点图(Node Graph)/曲线编辑器(Curve Editor)和属性(Properties)。 你将在节点图/曲线编辑器面板的节点图标签页内创建此工程的脚本。 我们将在你的工程需要的时候讲解这些屏幕上的控制。</p><h2><a name='header-c49' class='md-header-anchor '></a>使用工具栏</h2><p>工具栏包含了你创建你的工程所需的选项, 像是导入图像, 叠加图像, 绘制形状和遮罩(mask), 应用颜色矫正, 等等。 每个工具栏图标都会展示一个包含了你可用<em>操作</em>或者<em>节点(node)</em>的列表。将你的指针悬停在工具栏上你将会看到每个图标的工具说明。</p><h2><a name='header-c52' class='md-header-anchor '></a>使用菜单</h2><p>Nuke菜单栏位于你的屏幕顶部, 在主窗口之外。 这个菜单列出了选项<strong>file</strong>, <strong>Edit</strong>, <strong>Workspace</strong>等等选项。使用时在菜单栏中选择或者通过右键菜单选择。</p><p><img src='./pic/tutorial1_3.png' alt='Nuke菜单栏' /></p><p>右键菜单是和当前情景高度相关的。 根据你鼠标指针的位置它的选项将会改变。 例如在节点图中右键单击, 你将会看到来自菜单栏的选项和你可以从工具栏插入的节点。 在查看器右键单击你将会看到查看器选项的菜单。</p><p><img src='./pic/tutorial1_4.png' alt='右键菜单' /></p><p>当你找不到适当的控制或者菜单选项时, 试试右键菜单。 许多选项只有当你需要使用它时才会显示。</p><blockquote><p><strong>提示</strong>: Nuke顶部的菜单栏在不同的操作系统上是不同的, 但是右键菜单无论你使用什么操作系统都是相同的。</p></blockquote><h2><a name='header-c66' class='md-header-anchor '></a>自定义你的工作区</h2><p>Nuke提供了多种自定义你窗口布局的方法。 是时候生成你自己独有的Nuke版本了! 在这个教程中你不需要调整默认布局, 但是为什么不试试满足你自己个人的需求呢? 你可以通过以下方法重新调整窗口布局:</p><ul><li><p>拖动不同面板间的分割线。</p><p><img src='./pic/tutorial1_5.png' alt='' /></p></li><li><p>要分割面板, 单击内容菜单(在每个面板左上角的格子按钮), 然后选择<strong>Split Vertical</strong> 或者<strong>Split Horizontal</strong>。</p><p><img src='./pic/tutorial1_6.png' alt='' /></p></li><li><p>要放弃面板, 在内容菜单中选择<strong>Close Pane</strong>。</p><p><img src='./pic/tutorial1_7.png' alt='' /></p></li><li><p>要给面板添加新的标签页, 在内容菜单中选择内容选项, 例如<strong>New Viewer</strong>(新查看器)或者 <strong>Curve Editor</strong>(曲线编辑器)。</p></li><li><p>点击标签页上的&quot;x&quot;关闭标签页。</p><p><img src='./pic/tutorial1_8.png' alt='' /></p></li><li><p>要移动标签页, 直接拖动它的标签到主窗口内的其他面板。</p></li><li><p>要孤立标签页作为一个浮动窗口, 将它的标签拖到主窗口外, 或者直接按住<strong>Ctrl</strong>(Mac用户使用<strong>Cmd</strong>)单击它的标签名。</p></li><li><p>将浮动窗口拖进主窗口内面板转换成标签页。</p></li><li><p>在菜单栏中, 选择<strong>Workspace</strong> &gt; <strong>Save Workspace</strong>来保存布局。 选择<strong>Workspace</strong> &gt; <strong>Restore Workspace</strong> 来恢复之前保存的布局。 </p></li></ul><h2><a name='header-c105' class='md-header-anchor '></a>保存文件和文件备份</h2><p>我们假设你已经知道如何保存文件(提示: 选择 <strong>File</strong> &gt; <strong>Save Comp As</strong>)。 另外, Nuke包含自动保存特性来帮助你在系统故障后恢复你的工程。 是的, 我们知道你<em>永远</em>不会遇到这种事情, 但是当它发生, 只要你启用了自动保存你就不会丢失你的成果。</p><h3><a name='header-c108' class='md-header-anchor '></a>设置文件/保存选项</h3><ol start='' ><li><p>在节点图中右键单击, 选择 <strong>Edit</strong> &gt; <strong>Preferences</strong>。</p><p>注意<strong>autosave filename</strong>文件夹被设置为:</p><p><code>[firstof [value root.name] [getenv NUKE_TEMP_DIR]/].autosave</code></p><p>你不需要做任何更改; 这只是告诉Nuke将自动保存备份到你工程文件的同一个文件夹或者<code>NUKE_TEMP_DIR</code>环境变量提供的文件夹。</p><p>现在, 你想要Nuke每隔多久自动备份一次你的工作? 每五分钟?</p></li><li><p>将<strong>force comp autosave after</strong>选项的改为<strong>300</strong>秒, 来让Nuke每5分钟自动备份一次你的工作。</p><p><img src='./pic/tutorial1_9.png' alt='' /></p></li><li><p>单击<strong>Save Prefs</strong>(保存首选项)来保存修改然后<strong>Close</strong>(关闭)回到主窗口。</p><p>如果你不保存就关闭对话框, 修改叫只对本次Nuke会话有效。</p></li></ol><h3><a name='header-c131' class='md-header-anchor '></a>恢复备份文件</h3><p>你可能会问, &quot;我怎么在系统或者电源故障后恢复备份文件?&quot; 问的好! 当你在此启动Nuke时, 你将会看到一个提示询问你是否为上次打开的文件恢复<strong>.autosave</strong>文件。 单击<strong>Yes</strong>然后Nuke就将打开备份文件。</p><blockquote><p><strong>提示</strong>: <strong>.autosave</strong>文件即使你正常退出Nuke也有用, 因为它不会从文件夹中删除。 例如, 重命名<strong>.autosave</strong>文件来创建你工程之前版本的归档。</p></blockquote><p>有时即使你没有遇到系统故障也会看到恢复提示。 这是因为你没保存修改就退出了Nuke, Nuke识别出<strong>.autosave</strong>文件的时间戳晚于你想要打开的文件。 这时, 由你决定你想要打开哪个版本的文件。</p><h3><a name='header-c139' class='md-header-anchor '></a>关闭自动备份</h3><p>好吧。 你非要读这个, 所以我们可以假设你是个乐意享受成果丢失风险的叛逆者。这是件能让人加速分泌肾上腺素的事。 或者你有关于保存文件的迷之强迫症,想要自己手动做所有的事情。 无论是何种原因, 你可以将&quot;autosave idle&quot;和&quot;force autosave&quot;设为0秒来禁用自动备份。 这就是所有你要做的。 祝你好运。</p><h2><a name='header-c142' class='md-header-anchor '></a>设置工程</h2><p>当你开始一个新的工程, 你需要定义工程设置: 工程的长度或帧范围, 每秒回放的帧数, 和输出格式。这些都要在<strong>Project Setting</strong>对话框中设置。</p><h3><a name='header-c145' class='md-header-anchor '></a>设置你的工程</h3><ol start='' ><li><p>在节点图上右键单击, 选择<strong>Edit</strong> &gt; <strong>Project Settings</strong>。</p><p><img src='./pic/tutorial1_10.png' alt='' /></p></li><li><p>在<strong>frame range</strong>栏中, 输入范围<strong>1</strong>到<strong>28</strong>。这是我们为工程创建的镜头长度。</p></li><li><p>设置<strong>24</strong>帧每秒(fps)。</p></li><li><p>单击<strong>full size format</strong>, 在下拉框中选择<strong>PC_Video 640  x 480</strong>。</p></li><li><p>关闭<strong>Project Settings</strong>控制面板。</p></li></ol><blockquote><p><strong>提示</strong>: 在<strong>Project Setting</strong>控制面板中, <strong>Color</strong>标签确定了你显示和输出设备的色彩集成。 你不需要在这些教程中更改LUT, 但是我们建议你研究并且在你自己的工程中设置它。</p></blockquote><p>现在, 你完成了一个新工程的标准准备流程。 在设置的过程中, 你用菜单栏访问了多种特性, 并且现在你将使用菜单栏来插入节点, 创建合成树。</p><h2><a name='header-c169' class='md-header-anchor '></a>使用节点</h2><p><em>节点</em>是构成你想要完成的一系列操作的基石。 <em>节点树</em>是展示操作执行顺序的示意图。 按以下操作来添加几个节点开始你自己的节点树。 结果将创建工程的背景。</p><h3><a name='header-c172' class='md-header-anchor '></a>插入节点</h3><p>插入节点:</p><ol start='' ><li><p>在工具栏中, 点击第一个图标来显示<strong>Image</strong>分类的节点。</p></li><li><p>从中选择<strong>Constant</strong>(纯色)来将这个节点添加到节点图。</p><p><img src='./pic/tutorial1_11.png' alt='' /></p><p>当你插入新的节点, 它的控制面板将会显示用于定义节点结果的参数。在本例中, Constant节点将会创建固态背板。</p><p><img src='./pic/tutorial1_12.png' alt='' /></p></li><li><p>在Constant控制面板中, 单击颜色轮来打开<strong>取色器</strong>(Color Picker)。</p><p><img src='./pic/tutorial1_13.png' alt='' /></p></li><li><p>拖动颜色滑块和轮中的指针来选择一个亮色, 一个适合用于合成背景&quot;地平线&quot;的颜色。 然后关闭颜色轮窗口。</p><p>这时, 你可以将&quot;Constant&quot;重命名为其他更具体的名字。</p></li><li><p>在控制面板中, 单击<strong>Constant</strong>名称, 你现在可以编辑它的名字, 所以输入<strong>背景</strong>然后按回车。</p><p><img src='./pic/tutorial1_14.png' alt='' /></p><p>此后, 我们称这个节点为&quot;背景&quot;节点。</p></li><li><p>关闭背景节点的面板。 当你需要再次打开它时, 只要双击节点控制面板就会再次出现。</p></li><li><p>单击<strong>背景</strong>节点来选择它。 然后, 单击鼠标右键然后选择<strong>Draw</strong> &gt; <strong>Ramp</strong>(渐变)。</p><p><img src='./pic/tutorial1_15.png' alt='' /></p></li><li><p>拖动<strong>Viewer1</strong>节点上箭头的尾巴到<strong>Ramp1</strong>节点上。 你将看到背景节点和渐变节点的输出和渐变控制出现在了查看器窗口内。</p><p><img src='./pic/tutorial1_16.png' alt='' /></p></li><li><p>单击<strong>Ramp1</strong>控制面板内的<strong>Color</strong>(颜色)标签。 然后选择能和你背景颜色相配的一个神色。</p><p><img src='./pic/tutorial1_17.png' alt='' /></p></li><li><p>单击控制面板中的Ramp标签来重新激活覆盖层的控制。 然后拖动<strong>p0</strong>和<strong>p1</strong>控制点来调整背景上渐变的分布和角度。</p></li></ol><p> <img src='./pic/tutorial1_18.png' alt='' /></p><ol start='11' ><li>当你满意结果时, 关闭Ramp1的控制面板来移除覆盖层。</li></ol><h3><a name='header-c232' class='md-header-anchor '></a>关于连接的提示</h3><p>大部分节点都有输入和输出连接器来建立他们之间计算的先后关系</p><p><img src='./pic/tutorial1_19.png' alt='节点上的连接器' /></p><p>在插入节点后尝试用以下方式将它们连接起来:</p><ul><li><p>拖动输入或者输出连接器到其他节点上来建立连接。</p><p><img src='./pic/tutorial1_20.jpg' alt='' /></p></li><li><p>先选择一个节点, 再按住<strong>Shift</strong>选择其他节点, 然后按下<strong>Y</strong>来将第一个节点连接为第二个节点的输出。</p><p><img src='./pic/tutorial1_21.jpg' alt='' /></p></li><li><p>先选择一个节点, 再按住<strong>Shift</strong>选择其他节点, 然后按下<strong>Shift+Y</strong>来将第二个节点连接为第一个节点的输出。</p><p><img src='./pic/tutorial1_21.jpg' alt='' /></p></li><li><p>选择一个节点然后按下<strong>Ctrl/Cmd+Shift+X</strong>来将它从节点树上拆分出来。</p><p><img src='./pic/tutorial1_23.jpg' alt='' /></p></li><li><p>对于有两个输入的节点, 可以选中并按下<strong>Shift+X</strong>来交换A/B输入。</p><p><img src='./pic/tutorial1_24.jpg' alt='' /></p></li><li><p>将遮罩连接器拖到其他节点上,来将它提供的图像作为选中节点的遮罩。</p><p><img src='./pic/tutorial1_25.jpg' alt='' /></p></li></ul><h2><a name='header-c270' class='md-header-anchor '></a>导入图像序列</h2><p>在这个工程中, 你需要导入几个图像序列来作为前景, 并且还需要一个背景。</p><h3><a name='header-c273' class='md-header-anchor '></a>读取图像的方法</h3><ol start='' ><li><p>单击节点图的空白处。这是为了确保没有选中任何节点。</p></li><li><p>在节点图上右键单击, 然后选择 <strong>image</strong> &gt; <strong>Read</strong> (或者在Nuke窗口内单击<strong>R</strong>)</p><blockquote><p><strong>提示</strong>: 在已有的读取节点上单击<strong>R</strong>, 可以打开这个节点的文件路径浏览器。</p></blockquote><p><img src='./pic/tutorial1_26.png' alt='' /></p><p>将会出现一个文件浏览器。 在这里你可以选择你想要导入的文件。 当你在这个窗口中浏览文件时, Nuke会将带有帧编号的序列帧显示为单个文件对象。</p></li><li><p>浏览到 <strong>Nuke_Tutorials/CompBasics/</strong> 目录。</p></li><li><p>收藏这个目录。 在文件浏览器的左侧窗口单击鼠标右键, 然后选择 <strong>Add</strong>(添加)。</p><p><img src='./pic/tutorial1_27.jpg' alt='' /></p></li><li><p>输入书签名称, 或者使用默认值(文件夹名称), 然后单击 <strong>OK</strong>。</p><p><img src='./pic/tutorial1_28.jpg' alt='' /></p></li><li><p>打开 <strong>engine_rgba</strong> 目录, 选择 <strong>engine.v01.####.exr</strong> 图像序列, 然后单击 <strong>Open</strong>(打开)。</p><p><img src='./pic/tutorial1_29.png' alt='' /></p><p>Nuke将检索图像序列并将它的缩略图显示在节点上。 Read节点的控制面板将显示图像的分辨率和帧范围。</p><blockquote><p><strong>提示</strong>: Nuke从图像自身的格式读取图像, 但是Read节点使用线性颜色空间输出结果。 如果需要, 你可以改变Read节点控制面板上的Colorspace选项, 或者插入 <strong>Color</strong> &gt; <strong>Colorspace</strong>(颜色空间) 节点来决定你要输出或者计算的颜色模式。</p></blockquote></li><li><p>框选(按住左键不放然后拖动)选择背景和Ramp节点。然后将它们拖到右边来为其他节点腾出空间。</p><p><img src='./pic/tutorial1_30.jpg' alt='' /></p></li><li><p>从右键菜单选择 <strong>Image</strong> &gt; <strong>Read</strong> 来导入另一个图像序列。 使用文件浏览器选择 <strong>Nuke_Tutorials/CompBasics/smoke_left.wh/smoke_left.####.rgba</strong> 图像序列。</p></li><li><p>再添加一个读取节点来检索 <strong>Nuke_Tutorials/CompBasics/smoke_right.wh/smoke_right.####.rgba</strong> 图像序列。</p><p><img src='./pic/tutorial1_31.jpg' alt='' /></p></li><li><p>像上图一样调整节点的位置, 为创建节点连接腾出空间。</p></li></ol><h2><a name='header-c327' class='md-header-anchor '></a>在窗口间导航</h2><p>当你的节点树增加更多节点时, 节点图面板可能会显得有些小了。 当然, 你已经知道了如何调整窗口大小和悬浮它, 但很快你就会发现你的显示区域还是不够用了。 是时候学习一些导航操作方便你在节点图(和其他窗口中)工作了。尝试以下导航控制:</p><h3><a name='header-c330' class='md-header-anchor '></a>移动视图</h3><ul><li>Windows/Linux: 按住<strong>Alt</strong>键和鼠标左键在节点图中拖动。</li><li>Mac OS X:  按住<strong>(Option)Alt</strong>键和鼠标左键在节点图中拖动。</li></ul><p>当你拖动鼠标时, 你会移动节点图视图。</p><h3><a name='header-c340' class='md-header-anchor '></a>缩放或扩大视图</h3><ul><li>Windows/Linux: 按住<strong>Alt</strong>键和鼠标中键在节点图中拖动。</li><li>Mac OS X: 按住<strong>(Option)Alt</strong>键和鼠标中键在节点图中拖动。</li></ul><p>向左拖动放大, 向右拖动缩小。</p><ul><li>键盘缩放: 按 加(+) 键放大, 按 减(-) 键缩小。</li></ul><h3><a name='header-c354' class='md-header-anchor '></a>使用节点图概览</h3><ul><li><p>当节点树超过窗口边界范围时, 右下角会出现一个导航框。 你可以拖动其中的方框了快速导航到节点树的其他位置。</p><p><img src='./pic/tutorial1_32.png' alt='' /></p></li></ul><h3><a name='header-c361' class='md-header-anchor '></a>在窗口中进行框显</h3><ul><li>在你的键盘上按下<strong>F</strong>来在你的节点图边界内框显所有节点树的内容。</li></ul><p>节点图的导航控制同样可以适用于查看器。</p><h2><a name='header-c368' class='md-header-anchor '></a>使用查看器</h2><p>节点上的<em>邮票</em>, 那些小图片, 通常称为缩略图。 邮票显示了每个节点将会给节点树中的下一个节点提交的图像。 很小巧, 但是不适合正式的合成工作。 你需要打开查看器来看到完整图像。</p><p><img src='./pic/tutorial1_33.png' alt='' /></p><p>你可以同时打开多个查看器。 并且每个查看器你可以有10个页面/缓冲; 它们允许你在节点树中的不同视图切换。</p><p>当你启动Nuke时, 你将看到节点图中有一个默认Viewer节点, 你可以直接拖动它的连接箭头到其他节点上来显示节点的输出。 你可以通过在菜单栏中选择 <strong>Viewer</strong>(查看器) &gt; <strong>Create New Viewer</strong>(创建新查看器) 或者按 <strong>Ctrl+I</strong> 来创建新查看器。</p><h3><a name='header-c377' class='md-header-anchor '></a>在查看器中显示图像</h3><p>要在查看器中显示图像:</p><ol start='' ><li><p>拖动Viewer节点的连接器到 <strong>engine.v01</strong> 的Read节点。</p><p><img src='./pic/tutorial1_34.jpg' alt='' /></p><p>备选方法: 选择 <strong>engine.v01</strong> 的Read节点然后按<strong>1</strong>来连接Viewer节点。 Nuke将在查看器中显示节点的输出。</p><p><img src='./pic/tutorial1_35.png' alt='' /></p></li><li><p>按住<strong>Alt</strong>键(Mac用户使用<strong>Option</strong>键)和鼠标左键在查看器中拖动来移动视图。</p></li><li><p>按住<strong>Alt</strong>键(Mac用户使用<strong>Option</strong>键)和鼠标中键在查看器中拖动来缩放视图。你也可以使用查看器顶部的&quot;缩放&quot;下拉菜单来缩放视图。</p><p><img src='./pic/tutorial1_36.jpg' alt='' /></p></li><li><p>按下<strong>F</strong>来使当前图像适合查看器边界。</p><p>你可以通过查看器查看这个图像的多个通道。 顶部的&quot;RGB&quot;标签表示现在展示的是red(红), green(绿), blue(蓝)通道的结果。</p></li><li><p>要查看单个通道, 按<strong>R</strong>(red), <strong>G</strong>(green), <strong>B</strong>(blue) 或者 <strong>A</strong>(alpha)。 当你按下这些快捷键时, 顶部的表现将会受到当前显示通道的影响。</p><p><img src='./pic/tutorial1_37.png' alt='' /></p></li><li><p>再按一次通道快捷键回到&quot;RGB&quot;显示, 或者在通道下拉菜单中选择RGB。</p></li><li><p>要查看附加的通道, 按<strong>A</strong>显示alpha通道, 然后在通道下拉菜单中选择 <strong>lightingpasses.reflection</strong> 。</p><p><img src='./pic/tutorial1_38.png' alt='' /></p><p>现在你能看到图像文件的反射遮罩。</p></li><li><p>从通道下拉菜单中选择<strong>rgba.alpha</strong>来重置当你按下A键时将要看到的通道。</p></li><li><p>再次按<strong>A</strong>键切换为显示所有彩色通道。</p></li></ol><h3><a name='header-c424' class='md-header-anchor '></a>查看多个输入</h3><p>要查看多个输入:</p><ol start='' ><li><p>选择<strong>smoke_left</strong>剪辑的Read节点, 然后按你键盘上方的数字键<strong>2</strong>。</p><p>这会为所选的节点创建第二个查看器连接。 当鼠标悬停在查看器窗口上时, 按下相应的数字键来显示对应的输出图像。</p></li><li><p>将鼠标指针移动到查看器上, 按<strong>1</strong>显示<strong>engine.v01</strong>剪辑。按2显示<strong>smoke_left</strong>节点的输出结果。</p><p>用这种方式, 你可以将多个图像连接到同一个查看器上然后在它们之间切换。</p></li><li><p>选择其他每个节点按数字键来建立它们和查看器的连接。</p><p><img src='./pic/tutorial1_39.jpg' alt='' /></p></li><li><p>将鼠标指针移到查看器上, 然后按数字键来查看每个连接上的节点。</p><p>当你在不同图像间切换时, 可能图像看起来是一样大的。 但是请看查看器的右下角, 你会发现图像可能会是不同的分辨率。</p><p><img src='./pic/tutorial1_40.png' alt='不同分辨率的多个图像' /></p><p>Nuke允许单个合成中有多个不同的分辨率, 但是你需要确保这些图像符合工程的分辨率。 下面将讲解如何将合成中的元素合适地对齐。</p></li></ol><h2><a name='header-c452' class='md-header-anchor '></a>重新指定图像格式</h2><p>在Nuke脚本中创建的元素(例如背景和Ramp)自动继承工程设置中的分辨率。导入的图像不一定符合工程分辨率, 所以需要重新指定图像格式。</p><h3><a name='header-c455' class='md-header-anchor '></a>使图像适合工程分辨率</h3><ol start='' ><li><p>单击<strong>engine.v01</strong>剪辑的Read节点来选择它。</p></li><li><p>单击右键然后选择 <strong>Transform</strong>(变换) &gt; <strong>Reformat</strong>(重定格式)</p></li><li><p>为节点图中的所有Read节点重复前两步。</p></li><li><p>将鼠标指针移动到查看器上, 按下键盘数字键(1,2和3)来在连接上的图像间切换。</p><p>现在每个图像的分辨率都应该符合工程分辨率了。</p></li></ol><p>如果你对工程设置进行了修改, 所有被设为&quot;root.format&quot;的元素也会跟着更改。 如果你没有对图像进行重定格式, 图像会保持它原本的格式, 不受工程设置影响。</p><h2><a name='header-c473' class='md-header-anchor '></a>使用代理和较低分辨率</h2><p>代理是你想要最终创建的图像的低分辨率版本。 它能在许多合成任务中让你更快地工作。然后当你准备好创建最终输出的时候, 再关闭代理模式回到全尺寸版本。</p><p><img src='./pic/tutorial1_41.png' alt='tutorial1_41' /></p><p><em>左为全尺寸, 右为代理</em></p><p>Nuke可以自动根据你图像的分辨率生成代理。 你可以在 <strong>Edit</strong> &gt; <strong>Project Settings</strong>(工程设置) 中指定方法。</p><p>要切换为你在工程设置下设置的代理分辨率, 你应该使用查看器中的&quot;proxy&quot;按钮。</p><p>并且, 你还可以使用&quot;较低分辨率&quot;按钮来为单个查看器设置较低分辨率。 &quot;较低分辨率&quot;在全尺寸和代理模式下都有效果。</p><h3><a name='header-c486' class='md-header-anchor '></a>激活代理模式</h3><ol start='' ><li><p>在节点图上单击鼠标右键然后选择<strong>Edit</strong> &gt; <strong>工程设置</strong>.</p></li><li><p>确保查看器窗口是打开的。</p></li><li><p>按<strong>Ctrl+P</strong>切换到代理模式</p><p>查看器中会有一个标签提示你正处在代理模式。</p></li><li><p>将鼠标指针移到查看器上, 按加(+)键几次来放大图像。</p></li><li><p>按<strong>Ctrl+P</strong>几次来在高分辨率和代理模式间切换。</p></li><li><p>在你继续之前, 按<strong>Ctrl+P</strong>切换回全尺寸模式。</p></li></ol><h3><a name='header-c508' class='md-header-anchor '></a>激活&quot;低分辨率&quot;模式</h3><ol start='' ><li><p>在&quot;低分辨率&quot;下拉菜单中选择<strong>1:4</strong>来改变显示分辨率为完整分辨率的25%。</p><p>在低分辨率下, Nuke计算图像所需的时间会较少。</p></li><li><p>将&quot;低分辨率&quot;下拉菜单改回<strong>1:1</strong>, 使用100%分辨率。</p><p>如果没有处于代理模式, 你将回到完整分辨率。 如果代理模式处于激活状态, 将显示代理模式分辨率的100%。</p></li></ol><h2><a name='header-c520' class='md-header-anchor '></a>合成图像</h2><p>Merge(合并)节点使用多种算法来将两个或者更多图像进行合成。 在本例中, 我们将使用非常简单的&quot;A在B之上(over)&quot;合成来将前景图像叠在背景图像之上。</p><p>你可以通过工具栏或者菜单添加合成节点, 但是这次我们将直接使用快捷键。这个技巧是选择你想要合成的节点然后按键盘快捷键来添加一个合成节点。</p><h3><a name='header-c525' class='md-header-anchor '></a>将两个节点合成</h3><ol start='' ><li><p>选择连接到<strong>engine.v01</strong>的<strong>Reformat1</strong>节点。 这提供第一个合成操作的前景层。</p></li><li><p>按住<strong>Shift</strong>选择<strong>Ramp1</strong>, 现在应该同时选择了两个节点(Reformat1和Ramp1)。</p></li><li><p>按<strong>M</strong>键来插入Merge节点。</p><p>你所选择的第一个节点作为Merge节点的A输入(前景), 第二个节点作为Merge节点的B输入(背景)。 如果需要, 你可以按<strong>Shift+X</strong>交换两个输入。</p><p><img src='./pic/tutorial1_42.png' alt='' /></p><p>在Merge节点的控制面板, <strong>operation</strong>(操作)参数决定了两个图像合成使用时的算法, 选择的算法将会显示在节点图中节点的名称中。</p></li><li><p>重新摆放节点, 让节点树看起来像这样:</p><p><img src='./pic/tutorial1_43.png' alt='' /></p></li><li><p>继续接下来一层, 选择连接着<strong>smoke_right</strong>的<strong>Reformat3</strong>节点, 然后按住<strong>Shift</strong>选择<strong>Ramp1</strong>。</p></li><li><p>按<strong>M</strong>键插入Merge节点将两个节点叠在一起。 这会将<strong>smoke_right</strong>图像合成在背景之上。</p><p><img src='./pic/tutorial1_44.png' alt='' /></p></li><li><p>默认的合成算法是&quot;Over&quot;, 不符合我们的需求。在Merge2控制面板中, 点击<strong>dropdown</strong>下拉菜单中选择<strong>screen</strong>(滤色)。</p></li><li><p>在Merge2控制面板中, 拖动<strong>mix</strong>(混合)滑块到<strong>0.30</strong>减少<strong>A</strong>通道提供的图像。</p><p><img src='./pic/tutorial1_45.png' alt='' /></p></li><li><p>还需要一个Merge节点。 选择连接着<strong>smoke_left</strong>的<strong>Reformat2</strong>节点。 按下<strong>Shift</strong>键然后选择<strong>Merge1</strong>节点(你插入的第一个Merge节点)。</p><p><img src='./pic/tutorial1_46.png' alt='' /></p></li><li><p>按下<strong>M</strong>将两个节点进行合成。 在Merge3控制面板中, 将<strong>mix</strong>滑块设为<strong>0.75</strong>。</p><p>合成的结果应该和以下图像类似。</p><p><img src='./pic/tutorial1_1.png' alt='' /></p></li></ol><h2><a name='header-c575' class='md-header-anchor '></a>对图像进行校色</h2><p>校色和滤镜能帮助你整合元素得到一个更好的合成。 在本例中, 你想要只调整前景的图像, 所以你应该将color correction(校色)节点加在Merge节点之前。</p><ol start='' ><li><p>选择<strong>Reformat1</strong>节点。 然后在节点图上右键单击并选择<strong>Color</strong>(颜色) &gt; <strong>Exposure</strong>(曝光)。这将会添加Expose1节点。</p><p><img src='./pic/tutorial1_47.png' alt='' /></p></li><li><p>假设你想要调整red颜色通道的数值。 将鼠标指针悬停到查看器窗口然后按<strong>R</strong>来显示red通道。</p></li><li><p>在<strong>Expose1</strong>控制面板中, 取消勾选<strong>gang</strong>(联合)。 这允许你分别调整单个颜色通道。</p><p><img src='./pic/tutorial1_48.png' alt='' /></p></li><li><p>拖动<strong>red</strong>滑块调整颜色值。 当你完成后, 在查看器上按<strong>R</strong>来显示每个通道。</p><p>Exposure节点符合预期, 但是结果不太像是高光。 颜色的改变太过平均。 要是有办法限制, 或者说是<em>遮罩</em>颜色矫正的范围, 应该会有更好的合成效果。嗯……</p></li></ol><h2><a name='header-c597' class='md-header-anchor '></a>对效果应用遮罩</h2><p>你可以对节点应用遮罩来限制它节点效果对图像的影响。下面展示了如何创建一个贝塞尔遮罩来限制颜色矫正。</p><h3><a name='header-c600' class='md-header-anchor '></a>创建并应用贝塞尔遮罩</h3><p>如此创建并应用贝塞尔遮罩:</p><ol start='' ><li><p>点击节点图的空白区域, 确保没有选中任何节点。</p></li><li><p>在工具栏中, 选择<strong>Draw</strong>(绘制) &gt; <strong>Roto</strong>(动态遮罩)来插入Roto节点。</p></li><li><p>在查看器窗口中的图像上绘制贝塞尔图形, 像这样:</p><p><img src='./pic/tutorial1_49.png' alt='' /></p></li><li><p>要调整形状的话, 在点上点击选中它, 然后拖动调整它的位置。</p></li><li><p>要创建锐角的话, 选中点然后右键单击并选择<strong>Cusp</strong>(尖点)。</p></li><li><p>要给形状添加点的话, 选择<strong>Add Points</strong>工具(查看器左侧工具栏中) 然后在形状的边缘上单击。</p></li><li><p>等你对形状满意了, 将<strong>Exposure1</strong>节点的<strong>mask</strong>连接器拖到<strong>Roto</strong>节点上。</p><p>在Exposure1节点的控制面板中, mask参数被自动设为了<strong>mask</strong>输入的<strong>rgba.alpha</strong> 通道。在本例中, 就是Roto节点的alpha通道。</p></li></ol><h2><a name='header-c629' class='md-header-anchor '></a>创建动画书预览</h2><p>你可以用查看器窗口中的时间线按钮来播放你的工程, 但是当你注意查看器窗口左下角的帧率(FPS)栏时, 你会发现Nuke并没有提供实时回放。因为Nuke是临时渲染每一帧的。 虽然快, 但是受到你机器性能的限制。</p><p>动画书(Flipbook)功能提供更好的实时预览, 因为它为动画书查看器进行了预渲染。 注意动画书特性提供和你当前分辨率同样的预览; 例如如果你在代理模式中, 你的动画书会是代理模式下的分辨率。</p><blockquote><p><strong>提示</strong>: 动画书功能会在<strong>Nuke</strong> &gt; <strong>Preferences</strong>(首选项)中你设置的文件夹中渲染临时文件。 你可以找到限制动画书特性使用空间的选项。</p></blockquote><h3><a name='header-c637' class='md-header-anchor '></a>生成动画书</h3><ol start='' ><li>选择你节点树最后的<strong>Over</strong>节点</li><li>在菜单栏中选择 <strong>Render</strong>(渲染) &gt; <strong>Flipbook selected</strong> (为选中的节点生成动画书)。</li><li>在预览中输入<strong>1-28</strong>帧然后点击<strong>OK</strong>。</li><li>当动画书准备好之后, 将会启动动画书查看器。 点击<strong>Play</strong>(播放)按钮查看结果。</li><li>关闭动画书查看器回到你的工程。</li></ol><h2><a name='header-c654' class='md-header-anchor '></a>结语</h2><p>在本次教程中, 你设置好了一个新的工程并且创建了一个简单的合成。 你学习了如何实际使用(至少是如何找到)Nuke的窗口和工具, 然后你渲染出了你合成的结果。 你完成了! 回家吧!</p><p>好吧…… 可能还有几件事你需要知道。 在此教程后, 你应该适应了Nuke用户界面, 所以带上你的探险帽然后看看其他教程吧。 自此之后没有特定的顺序, 所以快速掠过直到遇到感兴趣的内容再进行查看吧。</p></div>
+</body>
+</html>
