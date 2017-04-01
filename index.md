@@ -2,4 +2,4 @@
 
 ## 教程资源
 
-[Nuke官方教程](.\Nuke\Written_Tutorials\index.html)
+[Nuke官方教程_汉化版](.\Nuke\Written_Tutorials\index.html)
