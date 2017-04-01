@@ -2,9 +2,8 @@
 
 ## 教程资源
 
-[Nuke官方教程_汉化版](.\Nuke\Written_Tutorials\index.html)
-
-
+* [Nuke官方教程_汉化版](.\Nuke\Written_Tutorials\index.html)
+* 伯里曼人体结构绘画教学(简体中文清晰版) [**在线观看**](.\Bridgman.html) [百度网盘](https://pan.baidu.com/share/link?shareid=3915609403&uk=3741681143)
 
 ## 个人资料
 
