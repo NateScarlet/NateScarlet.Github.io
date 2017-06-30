@@ -43,7 +43,7 @@ permalink: /Nuke/tutorial1
 
 将会有一个空的Nuke窗口出现。 分割线将窗口分割成不同的面板。 每个面板有一页或者多页, 通过面板顶部的标签分割。 主窗口的左边是工具栏。
 
-![](.\pic\tutorial1_2.png)
+![tutorial1_2](.\pic\tutorial1_2.png)
 
 默认的面板设置下将会显示查看器(Viewer), 节点图(Node Graph)/曲线编辑器(Curve Editor)和属性(Properties)。 你将在节点图/曲线编辑器面板的节点图标签页内创建此工程的脚本。 我们将在你的工程需要的时候讲解这些屏幕上的控制。
 
@@ -71,21 +71,21 @@ Nuke提供了多种自定义你窗口布局的方法。 是时候生成你自己
 
 * 拖动不同面板间的分割线。
 
-  ![](.\pic\tutorial1_5.png)
+  ![tutorial1_5](.\pic\tutorial1_5.png)
 
 * 要分割面板, 单击内容菜单(在每个面板左上角的格子按钮), 然后选择**Split Vertical** 或者**Split Horizontal**。
 
-  ![](.\pic\tutorial1_6.png)
+  ![tutorial1_6](.\pic\tutorial1_6.png)
 
 * 要放弃面板, 在内容菜单中选择**Close Pane**。
 
-  ![](.\pic\tutorial1_7.png)
+  ![tutorial1_7](.\pic\tutorial1_7.png)
 
 * 要给面板添加新的标签页, 在内容菜单中选择内容选项, 例如**New Viewer**(新查看器)或者 **Curve Editor**(曲线编辑器)。
 
 * 点击标签页上的"x"关闭标签页。
 
-  ![](.\pic\tutorial1_8.png)
+  ![tutorial1_8](.\pic\tutorial1_8.png)
 
 * 要移动标签页, 直接拖动它的标签到主窗口内的其他面板。
 
@@ -113,7 +113,7 @@ Nuke提供了多种自定义你窗口布局的方法。 是时候生成你自己
 
 2. 将**force comp autosave after**选项的改为**300**秒, 来让Nuke每5分钟自动备份一次你的工作。
 
-   ![](.\pic\tutorial1_9.png)
+   ![tutorial1_9](.\pic\tutorial1_9.png)
 
 3. 单击**Save Prefs**(保存首选项)来保存修改然后**Close**(关闭)回到主窗口。
 
@@ -139,7 +139,7 @@ Nuke提供了多种自定义你窗口布局的方法。 是时候生成你自己
 
 1. 在节点图上右键单击, 选择**Edit** > **Project Settings**。
 
-   ![](.\pic\tutorial1_10.png)
+   ![tutorial1_10](.\pic\tutorial1_10.png)
 
 2. 在**frame range**栏中, 输入范围**1**到**28**。这是我们为工程创建的镜头长度。
 
@@ -165,15 +165,15 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 2. 从中选择**Constant**(纯色)来将这个节点添加到节点图。
 
-   ![](.\pic\tutorial1_11.png)
+   ![tutorial1_11](.\pic\tutorial1_11.png)
 
    当你插入新的节点, 它的控制面板将会显示用于定义节点结果的参数。在本例中, Constant节点将会创建固态背板。
 
-   ![](.\pic\tutorial1_12.png)
+   ![tutorial1_12](.\pic\tutorial1_12.png)
 
 3. 在Constant控制面板中, 单击颜色轮来打开**取色器**(Color Picker)。
 
-   ![](.\pic\tutorial1_13.png)
+   ![tutorial1_13](.\pic\tutorial1_13.png)
 
 4. 拖动颜色滑块和轮中的指针来选择一个亮色, 一个适合用于合成背景"地平线"的颜色。 然后关闭颜色轮窗口。
 
@@ -181,7 +181,7 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 5. 在控制面板中, 单击**Constant**名称, 你现在可以编辑它的名字, 所以输入**背景**然后按回车。
 
-   ![](.\pic\tutorial1_14.png)
+   ![tutorial1_14](.\pic\tutorial1_14.png)
 
    此后, 我们称这个节点为"背景"节点。
 
@@ -189,19 +189,19 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 7. 单击**背景**节点来选择它。 然后, 单击鼠标右键然后选择**Draw** > **Ramp**(渐变)。
 
-   ![](.\pic\tutorial1_15.png)
+   ![tutorial1_15](.\pic\tutorial1_15.png)
 
 8. 拖动**Viewer1**节点上箭头的尾巴到**Ramp1**节点上。 你将看到背景节点和渐变节点的输出和渐变控制出现在了查看器窗口内。
 
-   ![](.\pic\tutorial1_16.png)
+   ![tutorial1_16](.\pic\tutorial1_16.png)
 
 9. 单击**Ramp1**控制面板内的**Color**(颜色)标签。 然后选择能和你背景颜色相配的一个神色。
 
-   ![](.\pic\tutorial1_17.png)
+   ![tutorial1_17](.\pic\tutorial1_17.png)
 
 10. 单击控制面板中的Ramp标签来重新激活覆盖层的控制。 然后拖动**p0**和**p1**控制点来调整背景上渐变的分布和角度。
 
- ![](.\pic\tutorial1_18.png)
+ ![tutorial1_18](.\pic\tutorial1_18.png)
 
 11. 当你满意结果时, 关闭Ramp1的控制面板来移除覆盖层。
 
@@ -215,27 +215,27 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 * 拖动输入或者输出连接器到其他节点上来建立连接。
 
-  ![](.\pic\tutorial1_20.jpg)
+  ![tutorial1_20](.\pic\tutorial1_20.jpg)
 
 * 先选择一个节点, 再按住**Shift**选择其他节点, 然后按下**Y**来将第一个节点连接为第二个节点的输出。
 
-  ![](.\pic\tutorial1_21.jpg)
+  ![tutorial1_21](.\pic\tutorial1_21.jpg)
 
 * 先选择一个节点, 再按住**Shift**选择其他节点, 然后按下**Shift+Y**来将第二个节点连接为第一个节点的输出。
 
-  ![](.\pic\tutorial1_22.jpg)
+  ![tutorial1_22](.\pic\tutorial1_22.jpg)
 
 * 选择一个节点然后按下**Ctrl/Cmd+Shift+X**来将它从节点树上拆分出来。
 
-  ![](.\pic\tutorial1_23.jpg)
+  ![tutorial1_23](.\pic\tutorial1_23.jpg)
 
 * 对于有两个输入的节点, 可以选中并按下**Shift+X**来交换A/B输入。
 
-  ![](.\pic\tutorial1_24.jpg)
+  ![tutorial1_24](.\pic\tutorial1_24.jpg)
 
 * 将遮罩连接器拖到其他节点上,来将它提供的图像作为选中节点的遮罩。
 
-  ![](.\pic\tutorial1_25.jpg)
+  ![tutorial1_25](.\pic\tutorial1_25.jpg)
 
 ## 导入图像序列
 
@@ -249,7 +249,7 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
    > **提示**: 在已有的读取节点上单击**R**, 可以打开这个节点的文件路径浏览器。
 
-   ![](.\pic\tutorial1_26.png)
+   ![tutorial1_26](.\pic\tutorial1_26.png)
 
    将会出现一个文件浏览器。 在这里你可以选择你想要导入的文件。 当你在这个窗口中浏览文件时, Nuke会将带有帧编号的序列帧显示为单个文件对象。
 
@@ -257,15 +257,15 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 4. 收藏这个目录。 在文件浏览器的左侧窗口单击鼠标右键, 然后选择 **Add**(添加)。
 
-   ![](.\pic\tutorial1_27.jpg)
+   ![tutorial1_27](.\pic\tutorial1_27.jpg)
 
 5. 输入书签名称, 或者使用默认值(文件夹名称), 然后单击 **OK**。
 
-   ![](.\pic\tutorial1_28.jpg)
+   ![tutorial1_28](.\pic\tutorial1_28.jpg)
 
 6. 打开 **engine_rgba** 目录, 选择 **engine.v01.####.exr** 图像序列, 然后单击 **Open**(打开)。
 
-   ![](.\pic\tutorial1_29.png)
+   ![tutorial1_29](.\pic\tutorial1_29.png)
 
    Nuke将检索图像序列并将它的缩略图显示在节点上。 Read节点的控制面板将显示图像的分辨率和帧范围。
 
@@ -273,13 +273,13 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 7. 框选(按住左键不放然后拖动)选择背景和Ramp节点。然后将它们拖到右边来为其他节点腾出空间。
 
-   ![](.\pic\tutorial1_30.jpg)
+   ![tutorial1_30](.\pic\tutorial1_30.jpg)
 
 8. 从右键菜单选择 **Image** > **Read** 来导入另一个图像序列。 使用文件浏览器选择 **Nuke_Tutorials/CompBasics/smoke_left.wh/smoke_left.####.rgba** 图像序列。
 
 9. 再添加一个读取节点来检索 **Nuke_Tutorials/CompBasics/smoke_right.wh/smoke_right.####.rgba** 图像序列。
 
-   ![](.\pic\tutorial1_31.jpg)
+   ![tutorial1_31](.\pic\tutorial1_31.jpg)
 
 10. 像上图一样调整节点的位置, 为创建节点连接腾出空间。
 
@@ -307,7 +307,7 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 * 当节点树超过窗口边界范围时, 右下角会出现一个导航框。 你可以拖动其中的方框了快速导航到节点树的其他位置。
 
-  ![](.\pic\tutorial1_32.png)
+  ![tutorial1_32](.\pic\tutorial1_32.png)
 
 ### 在窗口中进行框显
 
@@ -319,7 +319,7 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 节点上的_邮票_, 那些小图片, 通常称为缩略图。 邮票显示了每个节点将会给节点树中的下一个节点提交的图像。 很小巧, 但是不适合正式的合成工作。 你需要打开查看器来看到完整图像。
 
-![](.\pic\tutorial1_33.png)
+![tutorial1_33](.\pic\tutorial1_33.png)
 
 你可以同时打开多个查看器。 并且每个查看器你可以有10个页面/缓冲; 它们允许你在节点树中的不同视图切换。
 
@@ -331,17 +331,17 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 1. 拖动Viewer节点的连接器到 **engine.v01** 的Read节点。
 
-   ![](.\pic\tutorial1_34.jpg)
+   ![tutorial1_34](.\pic\tutorial1_34.jpg)
 
    备选方法: 选择 **engine.v01** 的Read节点然后按**1**来连接Viewer节点。 Nuke将在查看器中显示节点的输出。
 
-   ![](.\pic\tutorial1_35.png)
+   ![tutorial1_35](.\pic\tutorial1_35.png)
 
 2. 按住**Alt**键(Mac用户使用**Option**键)和鼠标左键在查看器中拖动来移动视图。
 
 3. 按住**Alt**键(Mac用户使用**Option**键)和鼠标中键在查看器中拖动来缩放视图。你也可以使用查看器顶部的"缩放"下拉菜单来缩放视图。
 
-   ![](.\pic\tutorial1_36.jpg)
+   ![tutorial1_36](.\pic\tutorial1_36.jpg)
 
 4. 按下**F**来使当前图像适合查看器边界。
 
@@ -349,13 +349,13 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 5. 要查看单个通道, 按**R**(red), **G**(green), **B**(blue) 或者 **A**(alpha)。 当你按下这些快捷键时, 顶部的表现将会受到当前显示通道的影响。
 
-   ![](.\pic\tutorial1_37.png)
+   ![tutorial1_37](.\pic\tutorial1_37.png)
 
 6. 再按一次通道快捷键回到"RGB"显示, 或者在通道下拉菜单中选择RGB。
 
 7. 要查看附加的通道, 按**A**显示alpha通道, 然后在通道下拉菜单中选择 **lightingpasses.reflection** 。
 
-   ![](.\pic\tutorial1_38.png)
+   ![tutorial1_38](.\pic\tutorial1_38.png)
 
    现在你能看到图像文件的反射遮罩。
 
@@ -377,7 +377,7 @@ _节点_是构成你想要完成的一系列操作的基石。 _节点树_是展
 
 3. 选择其他每个节点按数字键来建立它们和查看器的连接。
 
-   ![](.\pic\tutorial1_39.jpg)
+   ![tutorial1_39](.\pic\tutorial1_39.jpg)
 
 4. 将鼠标指针移到查看器上, 然后按数字键来查看每个连接上的节点。
 
@@ -461,35 +461,35 @@ Merge(合并)节点使用多种算法来将两个或者更多图像进行合成�
 
    你所选择的第一个节点作为Merge节点的A输入(前景), 第二个节点作为Merge节点的B输入(背景)。 如果需要, 你可以按**Shift+X**交换两个输入。
 
-   ![](.\pic\tutorial1_42.png)
+   ![tutorial1_42](.\pic\tutorial1_42.png)
 
    在Merge节点的控制面板, **operation**(操作)参数决定了两个图像合成使用时的算法, 选择的算法将会显示在节点图中节点的名称中。
 
 4. 重新摆放节点, 让节点树看起来像这样:
 
-   ![](.\pic\tutorial1_43.png)
+   ![tutorial1_43](.\pic\tutorial1_43.png)
 
 5. 继续接下来一层, 选择连接着**smoke_right**的**Reformat3**节点, 然后按住**Shift**选择**Ramp1**。
 
 6. 按**M**键插入Merge节点将两个节点叠在一起。 这会将**smoke_right**图像合成在背景之上。
 
-   ![](.\pic\tutorial1_44.png)
+   ![tutorial1_44](.\pic\tutorial1_44.png)
 
 7. 默认的合成算法是"Over", 不符合我们的需求。在Merge2控制面板中, 点击**dropdown**下拉菜单中选择**screen**(滤色)。
 
 8. 在Merge2控制面板中, 拖动**mix**(混合)滑块到**0.30**减少**A**通道提供的图像。
 
-   ![](.\pic\tutorial1_45.png)
+   ![tutorial1_45](.\pic\tutorial1_45.png)
 
 9. 还需要一个Merge节点。 选择连接着**smoke_left**的**Reformat2**节点。 按下**Shift**键然后选择**Merge1**节点(你插入的第一个Merge节点)。
 
-   ![](.\pic\tutorial1_46.png)
+   ![tutorial1_46](.\pic\tutorial1_46.png)
 
 10. 按下**M**将两个节点进行合成。 在Merge3控制面板中, 将**mix**滑块设为**0.75**。
 
  合成的结果应该和以下图像类似。
 
- ![](.\pic\tutorial1_1.png)
+ ![tutorial1_1](.\pic\tutorial1_1.png)
 
 ## 对图像进行校色
 
@@ -497,13 +497,13 @@ Merge(合并)节点使用多种算法来将两个或者更多图像进行合成�
 
 1. 选择**Reformat1**节点。 然后在节点图上右键单击并选择**Color**(颜色) > **Exposure**(曝光)。这将会添加Expose1节点。
 
-   ![](.\pic\tutorial1_47.png)
+   ![tutorial1_47](.\pic\tutorial1_47.png)
 
 2. 假设你想要调整red颜色通道的数值。 将鼠标指针悬停到查看器窗口然后按**R**来显示red通道。
 
 3. 在**Expose1**控制面板中, 取消勾选**gang**(联合)。 这允许你分别调整单个颜色通道。
 
-   ![](.\pic\tutorial1_48.png)
+   ![tutorial1_48](.\pic\tutorial1_48.png)
 
 4. 拖动**red**滑块调整颜色值。 当你完成后, 在查看器上按**R**来显示每个通道。
 
@@ -523,7 +523,7 @@ Merge(合并)节点使用多种算法来将两个或者更多图像进行合成�
 
 3. 在查看器窗口中的图像上绘制贝塞尔图形, 像这样:
 
-   ![](.\pic\tutorial1_49.png)
+   ![tutorial1_49](.\pic\tutorial1_49.png)
 
 4. 要调整形状的话, 在点上点击选中它, 然后拖动调整它的位置。
 
