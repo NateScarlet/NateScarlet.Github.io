@@ -1,5 +1,4 @@
 <header>
-  <!-- navbar -->
   <nav class="navbar navbar-inverse">
     <div class="container">
       <!-- Brand and toggle get grouped for better mobile display -->
@@ -21,28 +20,12 @@
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right">
-          {% if page.url == "/index.html" %}
-          <li class="active">
-            {% else %}
-          </li>
-
-          <li>
-            {% endif %}
-            <!-- <a href="{{ site.baseurl }}/">主页</a></li> -->
-
-            {% for p in site.pages %} {% if p.title %} {% if p.url == page.url
-            %}
-          </li>
-
-          <li class="active">
-            {% else %}
-          </li>
-
-          <li>
-            {% endif %}
-            <a href="{{ p.url | prepend: site.baseurl }}"
-              ><span class="glyphicon {{ p.icon }}"></span> {{ p.title }}</a
-            >
+          {% for p in site.pages %} {% if p.title %}
+          <li class="{% if p.url == page.url %} active {% endif %}">
+            <a href="{{ p.url | prepend: site.baseurl }}">
+              <span class="glyphicon {{ p.icon }}"> </span>
+              {{ p.title }}
+            </a>
           </li>
           {% endif %} {% endfor %}
         </ul>
