@@ -7,10 +7,10 @@
       "label": "localize_files",
       "type": "shell",
       "windows": {
-        "command": "py ./scripts/localize_files.py ${file}"
+        "command": "py ./scripts/localize_files.py '${file}'"
       },
       "linux": {
-        "command": "./scripts/localize_files.py ${file}"
+        "command": "./scripts/localize_files.py '${file}'"
       },
       "problemMatcher": []
     },
@@ -18,10 +18,10 @@
       "label": "fc2 convert",
       "type": "shell",
       "windows": {
-        "command": "./scripts/fc2_image_convert.cmd ${file}"
+        "command": "./scripts/fc2_image_convert.cmd '${file}'"
       },
       "linux": {
-        "command": "./scripts/fc2_image_convert.sh ${file}"
+        "command": "./scripts/fc2_image_convert.sh '${file}'"
       },
       "problemMatcher": []
     }
