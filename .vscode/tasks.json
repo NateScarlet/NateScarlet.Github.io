@@ -1,0 +1,29 @@
+{
+  // See https://go.microsoft.com/fwlink/?LinkId=733558
+  // for the documentation about the tasks.json format
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "localize_files",
+      "type": "shell",
+      "windows": {
+        "command": "py ./scripts/localize_files.py ${file}"
+      },
+      "linux": {
+        "command": "./scripts/localize_files.py ${file}"
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "fc2 convert",
+      "type": "shell",
+      "windows": {
+        "command": "./scripts/fc2_image_convert.cmd ${file}"
+      },
+      "linux": {
+        "command": "./scripts/fc2_image_convert.sh ${file}"
+      },
+      "problemMatcher": []
+    }
+  ]
+}
