@@ -34,10 +34,6 @@ markdown: kramdown
 
 defaults:
   - scope:
-      path: ''
+      path: '_posts'
     values:
-      layout: 'post'
-  - scope:
-      path: 'Nuke'
-    values:
-      catagories: 'Nuke'
+      toc: true

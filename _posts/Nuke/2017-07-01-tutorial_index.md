@@ -1,15 +1,16 @@
 ---
-title:  "Nuke官方教程 目录"
+title: 'Nuke官方教程 目录'
 categories: 中文教程资源 Nuke
 date: 2017-07-01 00:00:00 +0800
 permalink: /Nuke/tutorial_index
 ---
+
 # 目录
 
-* [教程1: 合成基础](.\tutorial1)
-* 教程2: 二维点跟踪
-* 教程3: 键出和蒙板
-* 教程4: 三维集成
+- [教程 1: 合成基础](.\tutorial1)
+- 教程 2: 二维点跟踪
+- 教程 3: 键出和蒙板
+- 教程 4: 三维集成
 
 # 下载教程资源
 
@@ -17,15 +18,15 @@ permalink: /Nuke/tutorial_index
 
 2. 单击**NUKE Tutorial assets**下载
 
-3. 解压到Nuke_Tutorial文件夹
+3. 解压到 Nuke_Tutorial 文件夹
 
-   建议将Nuke_Tutorial放在
+   建议将 Nuke_Tutorial 放在
 
-   * `C:\Documents and Settings\All Users\Application Data\Nuke_Tutorials`(Windows)
-   * ` ~/Nuke_Tutorials `(Mac OS或者Linux)
+   - `C:\Documents and Settings\All Users\Application Data\Nuke_Tutorials`(Windows)
+   - `~/Nuke_Tutorials`(Mac OS 或者 Linux)
 
 ## 备用载点
 
-鉴于国内访问amazonaws有困难, 提供教程资产下载备用:
+鉴于国内访问 amazonaws 有困难, 提供教程资产下载备用:
 
-* [教程1资产 百度网盘(160M)](http://pan.baidu.com/s/1geCuktP)
+- [教程 1 资产 百度网盘(160M)](http://pan.baidu.com/s/1geCuktP)

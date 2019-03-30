@@ -1,8 +1,6 @@
 ---
-layout: post
 title: 'Processing 官方教程'
 categories: 中文教程资源
-toc: true
 ---
 
 [原文](https://processing.org/tutorials/gettingstarted/)

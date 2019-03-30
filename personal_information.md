@@ -1,8 +1,5 @@
 ---
-layout: page
 title: 个人资料
-comments: true
-permalink: /personal_information/
 ---
 
 # 个人资料
