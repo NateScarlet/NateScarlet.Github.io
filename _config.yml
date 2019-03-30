@@ -17,7 +17,7 @@ viewsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/blob/master
 # this is the url root of the create page link on the footer page.
 newsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/new/master
 #########################################
-# for duoshuo.com commenting system, uncomment following line if you do not want to include duoshuo.com. 
+# for duoshuo.com commenting system, uncomment following line if you do not want to include duoshuo.com.
 #duoshuo_shortname: lixizhi
 #duoshuo_url: "http://lixizhi.github.io"
 # disqus.com commenting system. please note that it is exclusive with duoshuo.com
@@ -33,13 +33,11 @@ markdown: kramdown
 # highlighter: false
 
 defaults:
-  -
-    scope:
-      path: ""
+  - scope:
+      path: ''
     values:
-      layout: "post"
-  -
-    scope:
-      path: "Nuke"
+      layout: 'post'
+  - scope:
+      path: 'Nuke'
     values:
-      catagories: "Nuke"
+      catagories: 'Nuke'

@@ -2,11 +2,10 @@
 layout: post
 title: 'Processing 官方教程'
 categories: 中文教程资源
+toc: true
 ---
 
-- TOC
-  {:toc}
-  [原文](https://processing.org/tutorials/gettingstarted/)
+[原文](https://processing.org/tutorials/gettingstarted/)
 
 # 你的第一个程序
 
