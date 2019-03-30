@@ -1,49 +1,53 @@
 ---
 layout: default
 ---
+
 <div class="row">
   <div id="myArticle" class="col-sm-9">
     <div class="post-area post">
       <article>
-        {{content}}
+        {{ content }}
       </article>
     </div>
   </div>
 </div>
-<p><br/></p>
+<p><br /></p>
 <div id="index" class="row">
   <div class="col-sm-9">
     <div class="post-area ">
-	  <div class="post-list-header">
-	  文章
-	  </div>
+      <div class="post-list-header">
+        文章
+      </div>
       <div class="post-list-body">
         <div class="all-posts" post-cate="All">
           {% for post in site.posts %}
-            <a class="post-list-item" href="{{ post.url | prepend: site.baseurl }}">
-              <h2>
+          <a
+            class="post-list-item"
+            href="{{ post.url | prepend: site.baseurl }}"
+          >
+            <h2>
               {{ post.title }}
-              </h2>
-              <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
-            </a>
+            </h2>
+            <local-time datetime="{{ post.date | date: '%FT%T%z' }}">{{
+              post.date | date: '%b %-d, %Y'
+            }}</local-time>
+          </a>
           {% endfor %}
         </div>
         <!-- <div class="posts-in-categories"> -->
         {% for category in site.categories %}
-          <div post-cate="{{category | first}}">
-            {% for posts in category  %}
-              {% for post in posts %}
-                {% if post.url %}
-                  <a href="{{ post.url }}" class="post-list-item">
-                    <h2>
-                    {{ post.title }}
-                    </h2>
-                    <span class="">{{ post.date | date: "%b %-d, %Y" }}</span>
-                  </a>
-                {% endif %}
-              {% endfor %}
-            {% endfor %}
-          </div>
+        <div post-cate="{{ category | first }}">
+          {% for posts in category %} {% for post in posts %} {% if post.url %}
+          <a href="{{ post.url }}" class="post-list-item">
+            <h2>
+              {{ post.title }}
+            </h2>
+            <local-time datetime="{{ post.date | date: '%FT%T%z' }}">{{
+              post.date | date: '%b %-d, %Y'
+            }}</local-time>
+          </a>
+          {% endif %} {% endfor %} {% endfor %}
+        </div>
         {% endfor %}
         <!-- </div> -->
       </div>
@@ -54,14 +58,19 @@ layout: default
       <div class="categories-list-header">
         分类
       </div>
-      
+
       <a href="javascript:;" class="categories-list-item" cate="All">
-        所有<span class="my-badge"> {{site.posts | size}}</span>
+        所有<span class="my-badge"> {{ site.posts | size }}</span>
       </a>
       {% for category in site.categories %}
-        <a href="javascript:;" class="categories-list-item" cate="{{ category | first }}">
-          {{ category | first }} <span class="my-badge">{{ category | last | size }}</span>
-        </a>
+      <a
+        href="javascript:;"
+        class="categories-list-item"
+        cate="{{ category | first }}"
+      >
+        {{ category | first }}
+        <span class="my-badge">{{ category | last | size }}</span>
+      </a>
       {% endfor %}
     </div>
   </div>

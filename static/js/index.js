@@ -5,6 +5,7 @@ $(document).ready(function() {
   categoryDisplay();
   generateContent();
   backToTop();
+  convertLocaleTime();
 });
 
 /**
@@ -132,4 +133,13 @@ function generateContent() {
             'data-offset': '50'
         });*/
   }
+}
+
+function convertLocaleTime() {
+  $('local-time').each(function() {
+    var localTime = new Date($(this).attr('datetime'));
+    if (!isNaN(localTime.getTime())) {
+      $(this).text(localTime.toLocaleString());
+    }
+  });
 }
