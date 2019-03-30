@@ -26,6 +26,10 @@ newsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/new/master
 #########################################
 
 # Build settings
+
+exclude:
+  - 'scripts'
+
 markdown: kramdown
 # highlight
 # highlighter: pygments
