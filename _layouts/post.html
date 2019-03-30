@@ -18,7 +18,8 @@ layout: default
       </header>
       <hr />
       <article>
-        {{ content | toc }}
+        {% include toc.html html=content id='markdown-toc' %}
+        {{ content }}
       </article>
       <hr />
       <div class="bdsharebuttonbox">

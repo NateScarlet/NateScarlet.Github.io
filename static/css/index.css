@@ -438,7 +438,7 @@ blockquote:last-child {
  * 文章目录相关
  */
 @media screen and (min-width: 768px) {
-  .section-nav,
+  #markdown-toc,
   #markdown-toc {
     display: none;
   }
