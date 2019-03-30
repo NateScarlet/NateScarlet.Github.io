@@ -30,6 +30,10 @@ newsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/new/master
 exclude:
   - 'scripts'
 
+plugins:
+  - jekyll-feed
+  - jekyll-toc
+
 markdown: kramdown
 # highlight
 # highlighter: pygments
