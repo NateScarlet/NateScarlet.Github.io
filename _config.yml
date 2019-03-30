@@ -1,5 +1,5 @@
 # Site settings
-title: NateScarlet的实验室
+title: Nate的实验室
 email: NateScarlet@Gmail.com
 description: NateScarlet's website
 # > # this means to ignore newlines until "baseurl:"
@@ -32,7 +32,6 @@ exclude:
 
 plugins:
   - jekyll-feed
-  - jekyll-toc
 
 markdown: kramdown
 # highlight
@@ -42,6 +41,5 @@ markdown: kramdown
 
 defaults:
   - scope:
-      path: '_posts'
+      path: ''
     values:
-      toc: true
