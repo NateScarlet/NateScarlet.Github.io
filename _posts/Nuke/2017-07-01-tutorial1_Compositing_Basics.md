@@ -7,8 +7,6 @@ permalink: /Nuke/tutorial1
 
 [原文](file:///C:/Program%20Files/Nuke10.0v4/Documentation/html/Default.html#getting_started/tutorial1/compositing_basics.html)
 
-# 教程 1: 合成基础
-
 你好! 这个教程将向你介绍 nuke, 你将创建一个简单的合成并且带你浏览过大部分的窗口, 屏幕上的控制, 和其他界面元素。
 
 ## 介绍
