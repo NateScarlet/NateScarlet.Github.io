@@ -1,15 +1,14 @@
+@import 'placeholder.scss';
+
 #toc {
   max-height: 100vh;
   overflow: auto;
   background-color: #f8f8fd;
   padding-top: 1em;
   padding-bottom: 1em;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
+
+  @extend %inset-shadow;
+
   @media screen and (min-width: 576px) {
     top: 0;
     position: sticky;
