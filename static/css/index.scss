@@ -14,6 +14,10 @@
 body {
   background-image: url(/static/img/canvas_bg.jpg);
   font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+  min-height: 100vh;
+}
+#middle-container {
+  min-height: calc(100vh - 138px);
 }
 article p {
   /*text-indent: 2em;*/
