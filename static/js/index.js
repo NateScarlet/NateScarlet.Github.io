@@ -115,7 +115,7 @@ function backToTop() {
 function generateContent() {
   if (typeof $('#toc').html() === 'undefined') {
     $('#sidebar').hide();
-    $('#myArticle')
+    $('#main')
       .removeClass('col-lg-9')
       .addClass('col-lg-12');
   }
