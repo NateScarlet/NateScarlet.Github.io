@@ -1,0 +1,29 @@
+@import 'placeholder.scss';
+
+.post {
+  font-size: 16px;
+  line-height: 1.5;
+  padding: 0;
+
+  background-color: #f8f8fd;
+  @extend %inset-shadow;
+
+  h4 {
+    font-weight: bold;
+  }
+
+  img {
+    max-width: 100%;
+    vertical-align: middle;
+
+    @extend %shadow;
+  }
+
+  header {
+    padding: 0.5em 1em;
+  }
+
+  article {
+    padding: 1em 2em;
+  }
+}
