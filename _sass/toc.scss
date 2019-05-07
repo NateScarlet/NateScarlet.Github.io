@@ -2,7 +2,7 @@
   max-width: 292px;
   max-height: 100vh;
   overflow: auto;
-  padding-top: 1em;
+  padding: 0.5em 1em;
   a {
     &:link {
       color: #666;
@@ -20,11 +20,6 @@
   }
 
   ul {
-    list-style-type: square;
-    padding-left: 30px;
-    li {
-      font-size: 15px;
-      line-height: 25px;
-    }
+    padding-left: 1.5em;
   }
 }
