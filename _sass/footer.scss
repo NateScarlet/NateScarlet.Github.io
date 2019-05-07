@@ -1,0 +1,32 @@
+/* footer */
+footer {
+  min-height: 50px;
+  line-height: 50px;
+  margin-top: 2em;
+  background: #3f4850;
+  color: #aaa;
+  text-align: center;
+
+  -webkit-box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.5);
+  a {
+    &:link {
+      color: #aaa;
+    }
+    &:visited {
+      color: #888;
+    }
+    &:hover {
+      color: #bbb;
+      text-decoration: none;
+    }
+    &:active {
+      color: #bbb;
+    }
+  }
+  .point {
+    margin: 0 8px;
+  }
+}
