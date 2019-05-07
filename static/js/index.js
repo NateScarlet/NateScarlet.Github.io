@@ -116,8 +116,8 @@ function generateContent() {
   if (typeof $('#toc').html() === 'undefined') {
     $('#sidebar').hide();
     $('#myArticle')
-      .removeClass('col-sm-9')
-      .addClass('col-sm-12');
+      .removeClass('col-lg-9')
+      .addClass('col-lg-12');
   }
 }
 
