@@ -306,6 +306,7 @@ blockquote:last-child {
   opacity: 0.8;
   display: none;
   z-index: 888;
+  cursor: pointer;
 }
 #top .arrow {
   margin: 0 auto;

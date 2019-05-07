@@ -98,12 +98,9 @@ function backToTop() {
   });
   //点击回到顶部
   $('#top').click(function() {
-    $('body').animate(
-      {
-        scrollTop: '0',
-      },
-      500
-    );
+    $('html, body')
+      .stop()
+      .animate({ scrollTop: 0 }, 500, 'swing');
   });
 
   //初始化tip
