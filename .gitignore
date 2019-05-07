@@ -1,3 +1,7 @@
 _site
 .sass-cache
 .jekyll-metadata
+
+/.vscode/*
+!/.vscode/tasks.json
+!/.vscode/cspell.json
