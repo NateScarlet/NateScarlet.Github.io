@@ -20,8 +20,9 @@ layout: default
         </p>
       </header>
       {{ content }}
+      {% if page.comments %}
       <hr />
-      {% include comments.html %}
+      {% include comments.html %} {% endif %}
     </article>
   </main>
 </div>
