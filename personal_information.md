@@ -2,8 +2,6 @@
 title: 个人资料
 ---
 
-# 个人资料
-
 - 邮箱: NateScarlet@Gmail.com
 - 微博: [@NateScarlet](https://weibo.com/natescarlet)
 - [微博标签: 还算能看的图](https://weibo.com/natescarlet/profile?is_tag=1&tag_name=%E8%BF%98%E7%AE%97%E8%83%BD%E7%9C%8B%E7%9A%84%E5%9B%BE)
