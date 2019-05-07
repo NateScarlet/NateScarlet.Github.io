@@ -4,6 +4,15 @@
   "version": "2.0.0",
   "tasks": [
     {
+      "label": "serve",
+      "type": "shell",
+      "command": "jekyll serve",
+      "runOptions": {
+        "runOn": "folderOpen"
+      },
+      "problemMatcher": []
+    },
+    {
       "label": "localize_files",
       "type": "shell",
       "windows": {

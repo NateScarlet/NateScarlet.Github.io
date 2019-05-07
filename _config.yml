@@ -39,7 +39,7 @@ markdown: kramdown
 # highlighter: rouge
 # highlighter: false
 
-defaults:
-  - scope:
-      path: ''
-    values:
+# defaults:
+#   - scope:
+#       path: ''
+#     values:
