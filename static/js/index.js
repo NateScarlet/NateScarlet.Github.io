@@ -113,8 +113,8 @@ function backToTop() {
  * 侧边目录
  */
 function generateContent() {
-  if (typeof $('#markdown-toc').html() === 'undefined') {
-    $('#content').hide();
+  if (typeof $('#toc').html() === 'undefined') {
+    $('#sidebar').hide();
     $('#myArticle')
       .removeClass('col-sm-9')
       .addClass('col-sm-12');

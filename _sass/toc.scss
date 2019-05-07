@@ -1,8 +1,19 @@
-#content {
-  max-width: 292px;
+#toc {
   max-height: 100vh;
   overflow: auto;
-  padding: 0.5em 1em;
+  background-color: #f8f8fd;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 0, 0, 0.1) inset;
+  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
+    0 0 20px rgba(0, 0, 0, 0.1) inset;
+  -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
+  @media screen and (min-width: 576px) {
+    top: 0;
+    position: sticky;
+  }
   a {
     &:link {
       color: #666;

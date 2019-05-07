@@ -375,16 +375,6 @@ blockquote:last-child {
   color: #91c3cf;
 } /* 选定的链接 */
 
-.shadow-bottom-center {
-  background-color: #f8f8fd;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
-}
-
 #myAffix .affix {
   top: -20px;
   bottom: 0px;

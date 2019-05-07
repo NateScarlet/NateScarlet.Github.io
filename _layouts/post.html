@@ -3,7 +3,10 @@ layout: default
 ---
 
 <div class="row">
-  <div id="myArticle" class="col-sm-9 post">
+  <aside id="sidebar" class="col-lg-3 hidden-xs">
+    {% include toc.html html=content id='toc' %}
+  </aside>
+  <div id="myArticle" class="col-lg-9 post">
     <header>
       <h1>{{ page.title }}</h1>
       <p>
@@ -21,10 +24,4 @@ layout: default
     <hr />
     {% include comments.html %}
   </div>
-
-  <aside class="col-sm-3 hidden-xs">
-    <div id="content" class="shadow-bottom-center sticky-top">
-      {% include toc.html html=content id='markdown-toc' %}
-    </div>
-  </aside>
 </div>
