@@ -4,6 +4,7 @@
 @import 'toc.scss';
 @import 'post.scss';
 @import 'footer.scss';
+@import 'post-list.scss';
 
 /**
  * Reset some basic elements
@@ -45,20 +46,6 @@ table td {
   padding: 2px 10px;
   vertical-align: top;
 }
-
-#index a:link {
-  color: #005;
-} /* 未访问的链接 */
-#index a:visited {
-  color: #669;
-} /* 已访问的链接 */
-#index a:hover {
-  color: #336;
-  text-decoration: none;
-} /* 鼠标移动到链接上 */
-#index a:active {
-  color: #99b;
-} /* 选定的链接 */
 
 /* navbar */
 nav {
@@ -131,76 +118,21 @@ nav {
 .categories-list-item .my-badge {
   font-size: 12px;
   font-weight: bold;
-  color: #fff;
-  background-color: #999;
+  color: rgb(112, 112, 112);
+  background-color: rgba(136, 149, 163, 0.082);
   padding: 0 7px 1px 7px;
-  border-radius: 9px;
   float: right;
-  transition: 0.4s ease;
-  -webkit-transition: 0.4s ease;
-  -moz-transition: 0.4s ease;
-  -o-transition: 0.4s ease;
+  transition: 0.2s ease-in;
+  -webkit-transition: 0.2s ease-in;
+  -moz-transition: 0.2s ease-in;
+  -o-transition: 0.2s ease-in;
 }
-.categories-list-item:hover .my-badge {
-  -webkit-transform: rotate(360deg) scale(1.2);
-  -moz-transform: rotate(360deg) scale(1.2);
-  -o-transform: rotate(360deg) scale(1.2);
-  -ms-transform: rotate(360deg) scale(1.2);
-  transform: rotate(360deg) scale(1.2);
-}
-
-/* shadow */
-.shadow-corner-curl {
-  position: relative;
-  background-color: #f8f8fd;
-  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),
-    0 0 20px rgba(0, 0, 0, 0.1) inset;
-  -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
-  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4), 0 0 20px rgba(0, 0, 0, 0.1) inset;
-}
-.shadow-corner-curl:before {
-  content: '';
-  position: absolute;
-  z-index: -5;
-  width: 70%;
-  height: 70%;
-  left: 9%;
-  bottom: 2%;
-  background: transparent;
-  -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  -o-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-
-  /* 向左倾斜12度，再旋转4度 */
-  -webkit-transform: skew(-11deg) rotate(-4deg);
-  -moz-transform: skew(-11deg) rotate(-4deg);
-  -o-transform: skew(-11deg) rotate(-4deg);
-  -ms-transform: skew(-11deg) rotate(-4deg);
-  transform: skew(-11deg) rotate(-4deg);
-}
-.shadow-corner-curl:after {
-  content: '';
-  position: absolute;
-  z-index: -5;
-  width: 70%;
-  height: 70%;
-  right: 9%;
-  bottom: 2%;
-  background: transparent;
-  -webkit-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  -moz-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  -o-box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
-
-  /* 向左倾斜12度，再旋转4度 */
-  -webkit-transform: skew(11deg) rotate(4deg);
-  -moz-transform: skew(11deg) rotate(4deg);
-  -o-transform: skew(11deg) rotate(4deg);
-  -ms-transform: skew(11deg) rotate(4deg);
-  transform: skew(11deg) rotate(4deg);
+.categories-list-item:hover {
+  -webkit-transform: scale(1.1);
+  -moz-transform: scale(1.1);
+  -o-transform: scale(1.1);
+  -ms-transform: scale(1.1);
+  transform: scale(1.1);
 }
 
 /**

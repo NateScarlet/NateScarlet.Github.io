@@ -1,0 +1,18 @@
+#post-list {
+  a {
+    &:link {
+      color: #005;
+    }
+    &:visited {
+      color: #669;
+    }
+    &:hover {
+      color: #336;
+      text-decoration: none;
+    }
+    &:active {
+      color: #99b;
+    }
+  }
+  margin-top: 15px;
+}
