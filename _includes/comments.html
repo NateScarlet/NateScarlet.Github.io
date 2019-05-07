@@ -7,3 +7,16 @@
   crossorigin="anonymous"
   async
 ></script>
+
+<p class="utterances-loading"></p>
+<script>
+  var utterancesLoadingCheck = setInterval(function() {
+    if ($('.utterances-frame').height()) {
+      $('.utterances-loading').remove();
+      clearInterval(utterancesLoadingCheck);
+    }
+    $('.utterances-loading').text(
+      '评论载入中' + '.'.repeat(((Date.now() / 300) % 3) + 1)
+    );
+  }, 100);
+</script>
