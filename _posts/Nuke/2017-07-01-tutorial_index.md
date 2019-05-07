@@ -1,6 +1,6 @@
 ---
 title: 'Nuke官方教程 目录'
-categories: 中文教程资源 Nuke
+categories: 教程翻译 Nuke
 date: 2017-07-01 00:00:00 +0800
 permalink: /Nuke/tutorial_index
 ---

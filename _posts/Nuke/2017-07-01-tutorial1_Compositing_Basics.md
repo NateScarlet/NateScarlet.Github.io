@@ -1,6 +1,6 @@
 ---
 title: 'Nuke官方教程 教程1: 合成基础'
-categories: 中文教程资源 Nuke
+categories: 教程翻译 Nuke
 date: 2017-07-01 03:45:34 +0800
 permalink: /Nuke/tutorial1
 ---

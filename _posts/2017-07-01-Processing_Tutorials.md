@@ -1,6 +1,6 @@
 ---
 title: 'Processing 官方教程'
-categories: 中文教程资源
+categories: 教程翻译
 ---
 
 [原文](https://processing.org/tutorials/gettingstarted/)
