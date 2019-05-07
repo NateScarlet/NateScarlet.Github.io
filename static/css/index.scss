@@ -1,3 +1,8 @@
+---
+---
+
+@import 'toc.scss';
+
 /**
  * Reset some basic elements
  */
@@ -67,10 +72,6 @@ nav {
   text-align: center;
 }
 
-/* index main */
-.main {
-  min-height: 800px;
-}
 .post-area {
   background-color: #f8f8fd;
   -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4),
@@ -435,44 +436,6 @@ blockquote:last-child {
   color: #91c3cf;
 } /* 选定的链接 */
 
-/**
- * 文章目录相关
- */
-@media screen and (min-width: 768px) {
-  #markdown-toc,
-  #markdown-toc {
-    display: none;
-  }
-}
-
-#content a:link {
-  color: #666;
-} /* 未访问的链接 */
-#content a:visited {
-  color: #666;
-} /* 已访问的链接 */
-#content a:hover {
-  color: #336;
-  text-decoration: none;
-} /* 鼠标移动到链接上 */
-#content a:active {
-  color: #99b;
-} /* 选定的链接 */
-
-#content {
-  max-width: 292px;
-}
-#content .content-text {
-  padding: 10px 0;
-}
-#content ul {
-  padding-left: 30px;
-}
-#content ul li {
-  /*list-style: none;*/
-  font-size: 15px;
-  line-height: 25px;
-}
 .shadow-bottom-center {
   background-color: #f8f8fd;
   -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.4),

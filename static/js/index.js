@@ -118,10 +118,6 @@ function generateContent() {
     $('#myArticle')
       .removeClass('col-sm-9')
       .addClass('col-sm-12');
-  } else {
-    $('#content .content-text').html(
-      '<ul>' + $('#markdown-toc').html() + '</ul>'
-    );
   }
 }
 

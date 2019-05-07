@@ -1,0 +1,29 @@
+#content {
+  max-width: 292px;
+  max-height: 100vh;
+  overflow: auto;
+  a {
+    &:link {
+      color: #666;
+    }
+    &:visited {
+      color: #666;
+    }
+    &:hover {
+      color: #336;
+      text-decoration: none;
+    }
+    &:active {
+      color: #99b;
+    }
+  }
+
+  ul {
+    list-style-type: square;
+    padding-left: 30px;
+    li {
+      font-size: 15px;
+      line-height: 25px;
+    }
+  }
+}

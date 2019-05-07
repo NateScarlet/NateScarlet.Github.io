@@ -18,7 +18,6 @@ layout: default
       </header>
       <hr />
       <article>
-        {% include toc.html html=content id='markdown-toc' %}
         {{ content }}
       </article>
       <hr />
@@ -26,5 +25,9 @@ layout: default
     </div>
   </div>
 
-  <div id="content" class="col-sm-3"></div>
+  <aside class="col-sm-3 hidden-xs">
+    <div id="content" class="shadow-bottom-center sticky-top">
+      {% include toc.html html=content id='markdown-toc' %}
+    </div>
+  </aside>
 </div>
