@@ -7,9 +7,13 @@
     ],
     // words - list of words to be always considered correct
     "words": [
+        "bootlocal",
         "crossorigin",
+        "DHCP",
         "Gmail",
+        "ifconfig",
         "kramdown",
+        "netmask",
         "repo"
     ]
 }
