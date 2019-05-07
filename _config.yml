@@ -11,19 +11,12 @@ baseurl: '' # the subpath of your site, e.g. /blog/
 url: 'https://natescarlet.github.io'
 # twitter_username: jekyllrb
 github_username: NateScarlet
+github_repo: NateScarlet/NateScarlet.github.io
 permalink: /:year/:month/:day/:title/
 # this is the url root of the view source link on the footer page.
 viewsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/blob/master/
 # this is the url root of the create page link on the footer page.
 newsourceroot: https://github.com/NateScarlet/NateScarlet.github.io/new/master
-#########################################
-# for duoshuo.com commenting system, uncomment following line if you do not want to include duoshuo.com.
-#duoshuo_shortname: lixizhi
-#duoshuo_url: "http://lixizhi.github.io"
-# disqus.com commenting system. please note that it is exclusive with duoshuo.com
-# disqus_shortname: lixizhi
-# disqus_url: "http://lixizhi.github.io"
-#########################################
 
 # Build settings
 
@@ -39,7 +32,8 @@ markdown: kramdown
 # highlighter: rouge
 # highlighter: false
 
-# defaults:
-#   - scope:
-#       path: ''
-#     values:
+defaults:
+  - scope:
+      path: '_posts'
+    values:
+      comments: true
