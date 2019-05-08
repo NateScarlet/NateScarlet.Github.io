@@ -21,15 +21,17 @@ categories: Docker
 
 ![修改后的类型](/images/VirtualBox_2019-05-07_21-22-30.png)
 
-TineCore linux 默认没装 DHCP 客户端所以需要手动分配一个 IP
+如果路由配置了 DHCP 就应该能自动获取到 IP 了
+
+![自动获取到的 IP](/images/Code_2019-05-07_21-34-49.png)
+
+但是服务器自然需要配一个固定 IP
 
 ```bash
 ifconfig eth2 192.168.1.2 netmask 255.255.255.0
 ```
 
-![分配好的 IP](/images/Code_2019-05-07_21-34-49.png)
-
-可以把分配 IP 的命令加到 `/var/lib/boot2docker/bootlocal.sh` 中让他每次开机自动运行
+可以把命令加到 `/var/lib/boot2docker/bootlocal.sh` 中让他每次开机自动运行
 
 配置完成之后就能在日志中看到客户端的真实 IP 了
 
