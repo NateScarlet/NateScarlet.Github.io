@@ -29,7 +29,7 @@ layout: default
               {{ post.title }}
             </h2>
             <local-time datetime="{{ post.date | date: '%FT%T%z' }}">{{
-              post.date | date: '%b %-d, %Y'
+              post.date | date: '%F %T %Z'
             }}</local-time>
           </a>
           {% endfor %}
@@ -43,7 +43,7 @@ layout: default
               {{ post.title }}
             </h2>
             <local-time datetime="{{ post.date | date: '%FT%T%z' }}">{{
-              post.date | date: '%b %-d, %Y'
+              post.date | date: '%F %T %Z'
             }}</local-time>
           </a>
           {% endif %} {% endfor %} {% endfor %}
