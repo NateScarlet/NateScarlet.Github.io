@@ -53,6 +53,8 @@ module.exports = {
 };
 ```
 
+如果项目文件夹下有 tslint.json 插件就会自动使用 [TSLint]
+
 ## 配置 VSCode
 
 在 VSCode 中
