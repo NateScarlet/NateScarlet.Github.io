@@ -86,7 +86,7 @@ F1 - 运行任务 - 选择 `npm: serve` 运行一次之后 VSCode 会自动生�
         }
       ],
       "background": {
-        "beginsPattern": "^Type checking and linting in progress...$",
+        "beginsPattern": "^Type checking( and linting)? in progress...$",
         "endsPattern": "^Time: \\d+ms$"
       }
     }
