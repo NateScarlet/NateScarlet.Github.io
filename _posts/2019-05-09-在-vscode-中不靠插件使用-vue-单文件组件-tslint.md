@@ -39,7 +39,7 @@ categories: VSCode Vue Typescript
 
 所以不太可能有基于 [TSLint] 的新项目
 
-于是决定用整合 [Vue CLI] 功能到 [VSCode] 的方法
+于是决定用整合 [Vue CLI TypeScript 插件] 功能到 [VSCode] 的方法
 
 ## 配置 Vue CLI
 
