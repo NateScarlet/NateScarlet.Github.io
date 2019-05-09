@@ -121,11 +121,13 @@ function generateContent() {
   }
 }
 
+moment.locale(window.navigator.userLanguage || window.navigator.language);
+
 function convertLocaleTime() {
   $('local-time').each(function() {
     var localTime = new Date($(this).attr('datetime'));
     if (!isNaN(localTime.getTime())) {
-      $(this).text(localTime.toLocaleString());
+      $(this).text(moment(localTime).format('llll'));
     }
   });
 }
