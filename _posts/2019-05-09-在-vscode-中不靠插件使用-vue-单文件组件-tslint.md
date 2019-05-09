@@ -57,9 +57,9 @@ module.exports = {
 
 ## 配置 VSCode
 
-在 VSCode 中
+在 [VSCode] 中
 
-F1 - 运行任务 - 选择 `npm: serve` 运行一次之后 VSCode 会自动生成任务配置
+F1 - 运行任务 - 选择 `npm: serve` 运行一次之后 [VSCode] 会自动生成任务配置
 
 然后在 .vscode/tasks.json 中配置任务[^5]:
 
@@ -104,7 +104,7 @@ F1 - 运行任务 - 选择 `npm: serve` 运行一次之后 VSCode 会自动生�
 
 ![效果](/images/Code_2019-05-10_00-08-11.png)
 
-更新会有些延迟但是不会拖慢 VSCode 的 Intellisense
+更新会有些延迟但是不会拖慢 [VSCode] 的 Intellisense
 
 [tslint vue]: https://github.com/prograhammer/vscode-tslint-vue
 [vetur]: https://github.com/vuejs/vetur
