@@ -28,7 +28,10 @@ categories: Docker
 但是服务器自然需要配一个固定 IP
 
 ```bash
-ifconfig eth2 192.168.1.2 netmask 255.255.255.0
+# 停止 DHCP 客户端
+kill $(cat /var/run/udhcpc.eth2.pid)
+# 分配固定 IP
+ifconfig eth2 192.168.1.2 netmask 255.255.255.0 up
 ```
 
 可以把命令加到 `/var/lib/boot2docker/bootlocal.sh` 中让他每次开机自动运行
