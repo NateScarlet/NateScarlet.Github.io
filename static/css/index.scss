@@ -7,10 +7,6 @@
 @import 'post-list.scss';
 @import 'utterances.scss';
 
-/**
- * Reset some basic elements
- */
-/* commom */
 body {
   background-image: url(/static/img/canvas_bg.jpg);
   font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
@@ -19,37 +15,26 @@ body {
 #middle-container {
   min-height: calc(100vh - 138px);
 }
-article p {
-  /*text-indent: 2em;*/
-}
-pre {
-  padding: 0;
-  background: none;
-}
-
-pre code {
-  font-size: 14px;
-}
 
 table {
   border-top: 2px solid #777;
   border-bottom: 2px solid #777;
   margin: 8px 0;
-}
-table thead {
-  border-bottom: 1px dashed #777;
-  background-color: #aaa;
-  color: #fff;
-}
-table th {
-  padding: 2px 10px;
-}
-table tr:nth-child(2n) {
-  background-color: #e5eaed;
-}
-table td {
-  padding: 2px 10px;
-  vertical-align: top;
+  thead {
+    border-bottom: 1px dashed #777;
+    background-color: #aaa;
+    color: #fff;
+  }
+  th {
+    padding: 2px 10px;
+  }
+  tr:nth-child(2n) {
+    background-color: #e5eaed;
+  }
+  td {
+    padding: 2px 10px;
+    vertical-align: top;
+  }
 }
 
 /* navbar */
