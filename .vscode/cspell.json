@@ -10,12 +10,15 @@
         "bootlocal",
         "crossorigin",
         "DHCP",
+        "epub",
         "Gmail",
         "ifconfig",
         "kramdown",
         "netmask",
         "Pixiv",
         "repo",
-        "Vetur"
+        "submodule",
+        "Vetur",
+        "worktree"
     ]
 }
