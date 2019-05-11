@@ -13,7 +13,7 @@ title: 使用单个仓库配置 GitHub Pages + Sphinx
 
 所以希望在 [GitHub Pages] 上面也能使用 [Sphinx]
 
-最终方案样本从仓库: [WuLiFang/Nuke](https://github.com/WuLiFang/Nuke)
+最终方案样本仓库: [WuLiFang/Nuke](https://github.com/WuLiFang/Nuke)
 
 ## 需求
 
@@ -23,16 +23,150 @@ title: 使用单个仓库配置 GitHub Pages + Sphinx
 - 支持 clone 仓库时不克隆文档
 - 方便新用户编辑文档
 
+## 托管位置选择
+
+使用 [Sphinx] 就不能提供 [GitHub Pages] 提供的构建流程了
+
+需要把构建好的文件放到 GitHub 支持的托管位置[^2]:
+
+- master 分支
+- master 分支的 docs 文件夹
+- gh-pages 分支
+
+### master 分支
+
+如果使用 master 分支就需要将文档源码和构建好的文档分成两个仓库
+
+其中构建好的文档和文档源码的数据很大部分会是重复的, 比如图片
+
+会造成存储空间的浪费
+
+把文档源码放在其他分支也是个解决方案, 但是这样比较反直觉
+
+所以不选择用 master 分支托管
+
+### master 分支的 docs 文件夹
+
+需要在文档源码仓库中用 docs 放构建好的文档, 造成命名错误
+
+应该只适合使用 jekyll 构建的文档使用
+
+所以不选择用 master 分支的 docs 文件夹
+
+### gh-pages 分支
+
+用 gh-pages 分支托管需要实现从一个分支构建到另一个分支
+
+看上去没什么问题, 所以最后就决定用 gh-pages 分支托管
+
 ## Sphinx 配置
 
-## 项目管理方案
+直接 `sphinx-quickstart` 创建项目
 
-### 使用单独的文档仓库
+然后在 `conf.py` 中添加 [Sphinx Github Pages 插件]
+
+这个插件会为生成后的文档添加 `.nojekyll` 文件, 也会为 [GitHub Pages] 自定义域名添加 `CNAME` 文件
+
+没有 `.nojekyll` [GitHub Pages] 会认为 `_` 开头的文件夹是 `jekyll` 内部文件夹过滤掉[^3]
+
+```python
+extensions = ['sphinx.ext.autodoc',
+              'sphinx.ext.viewcode',
+              'sphinx.ext.githubpages'] # <- 这个
+```
+
+然后把 `build/html` 和 `gh-pages` 关联就行了
+
+> 注意: [Sphinx] 在 windows 上输出的文件名会被转成小写, 而 [GitHub Pages] 的路由是大小写敏感的
+> 文档中无法正确链接到使用了大写字母作为文件名的文件
+
+## 关联 build/html 到 gh-pages 分支
+
+推荐单独创建一个 docs 分支存储文档
+
+因为文档不是运行源码必须的, 还会包含不少图片
+
+在克隆仓库的时候如果 docs 存放到单独分支可以只克隆源码分支:
+
+```shell
+git clone --single-branch --depth 1 <url>
+```
+
+master 分支除非确实需要否则尽量不存放二进制文件
+
+之前下个 2MB 的插件它 master 分支放了 200MB 的演示素材 网速不行克隆半天
+
+如果文件大还应该使用 [Git LFS]
+
+不用 docs 分支也能关联, 不过以下的示例都是以使用 docs 分支为前提的
+
+创建一个孤儿 gh-pages 分支:
+
+```shell
+git checkout --orphan gh-pages
+git reset
+echo '' > .gitignore
+git add .gitignore
+git commit -m init
+# 返回 docs 分支
+git checkout -f docs
+```
 
 ### Git 子模块 (submodule)
 
-### Git 工作区 (worktree)
+首先想到的关联文件夹到 github 仓库的方法是用 git 子模块
+
+创建子模块:
+
+```shell
+git submodule add -b gh-pages <仓库 URL> build/html
+git submodule update --remote
+```
+
+然后正常构建推送就行了
+Github 检测到 `gh-pages` 分支会自动启用 [GitHub Pages] 托管
+
+但是这个方案有几个缺点:
+
+- 子模块必须有一个远程仓库才能使用
+- 子模块的数据处理和父仓库是分离的, 同样的仓库数据同时存在两份, 浪费硬盘
+- 子模块是一个需要作为一个额外仓库管理, 比如更新远程 URL 时要同时更新子模块和父仓库的
+
+### Git 工作树 (worktree)
+
+由于硬盘浪费的问题, 搜索 Git 共享工作树的解决方案
+
+发现 Git 自身提供这个功能
+
+由于 Git 工作树是本地设置, 官方没有提供像 `.gitmodule` 那样的版本管理功能
+
+不过因为源码运行不依赖文档, 不需要在源码分支管理文档
+
+只要在 README.md 里面说明怎么配置就行了, 还更灵活
+
+在 master 分支创建工作树并且关联分支:
+
+```shell
+git worktree add --checkout docs docs
+git worktree add --checkout docs/build/html gh-pages
+# 添加文件夹到 .gitignore
+echo /docs  >> .gitignore
+echo /build/html  >> docs/.gitignore
+```
+
+然后也是正常构建推送就行了
+
+不过 [VSCode] 当前支持检测多个子模块但是不支持检测多个工作树(支持单个工作树)
+
+需要手动敲命令或者不断切换文件夹来管理源代码
 
 [^1]: [Sphinx] 官方支持输出 epub 格式, 然后 epub 格式用 [pandoc] 就能转成 docx
+[^2]: <https://help.github.com/en/articles/configuring-a-publishing-source-for-github-pages>
+[^3]: <https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/>
 
 [sphinx]: https://www.sphinx-doc.org
+[sphinx github pages 插件]: https://www.sphinx-doc.org/en/master/usage/extensions/githubpages.html
+[vscode]: https://code.visualstudio.com/
+[github pages]: https://pages.github.com/
+[git lfs]: https://git-lfs.github.com/
+[pandoc]: https://pandoc.org/
