@@ -2,6 +2,7 @@
 layout: post
 title: 使用单个仓库配置 GitHub Pages + Sphinx
 date: 2019-05-12 01:19:35 +0800
+categories: web Git
 ---
 
 这几天开始觉得先写文档再写测试最后实现的流程更合理 所以打算研究下用 [GitHub Pages] 托管项目文档
