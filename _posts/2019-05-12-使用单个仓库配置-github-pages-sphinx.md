@@ -1,6 +1,7 @@
 ---
 layout: post
 title: 使用单个仓库配置 GitHub Pages + Sphinx
+date: 2019-05-12 01:19:35 +0800
 ---
 
 这几天开始觉得先写文档再写测试最后实现的流程更合理 所以打算研究下用 [GitHub Pages] 托管项目文档
@@ -49,7 +50,7 @@ title: 使用单个仓库配置 GitHub Pages + Sphinx
 
 需要在文档源码仓库中用 docs 放构建好的文档, 造成命名错误
 
-应该只适合使用 jekyll 构建的文档使用
+应该只适合使用 [jekyll] 构建的文档使用
 
 所以不选择用 master 分支的 docs 文件夹
 
@@ -65,19 +66,20 @@ title: 使用单个仓库配置 GitHub Pages + Sphinx
 
 然后在 `conf.py` 中添加 [Sphinx Github Pages 插件]
 
-这个插件会为生成后的文档添加 `.nojekyll` 文件, 也会为 [GitHub Pages] 自定义域名添加 `CNAME` 文件
-
-没有 `.nojekyll` [GitHub Pages] 会认为 `_` 开头的文件夹是 `jekyll` 内部文件夹过滤掉[^3]
-
 ```python
 extensions = ['sphinx.ext.autodoc',
               'sphinx.ext.viewcode',
               'sphinx.ext.githubpages'] # <- 这个
 ```
 
+这个插件会为生成后的文档添加 `.nojekyll` 文件, 也会为 [GitHub Pages] 自定义域名添加 `CNAME` 文件
+
+没有 `.nojekyll` [GitHub Pages] 会认为 `_` 开头的文件夹是 `jekyll` 内部文件夹过滤掉[^3]
+
 然后把 `build/html` 和 `gh-pages` 关联就行了
 
 > 注意: [Sphinx] 在 windows 上输出的文件名会被转成小写, 而 [GitHub Pages] 的路由是大小写敏感的
+>
 > 文档中无法正确链接到使用了大写字母作为文件名的文件
 
 ## 关联 build/html 到 gh-pages 分支
@@ -114,7 +116,7 @@ git checkout -f docs
 
 ### Git 子模块 (submodule)
 
-首先想到的关联文件夹到 github 仓库的方法是用 git 子模块
+首先想到的关联文件夹到 Git 仓库的方法是用 git 子模块
 
 创建子模块:
 
@@ -134,9 +136,9 @@ Github 检测到 `gh-pages` 分支会自动启用 [GitHub Pages] 托管
 
 ### Git 工作树 (worktree)
 
-由于硬盘浪费的问题, 搜索 Git 共享工作树的解决方案
+由于硬盘浪费的问题, 搜索了一下 Git 共享工作树的方法
 
-发现 Git 自身提供这个功能
+发现 Git 自身提供这个功能, 就是 Git 工作树
 
 由于 Git 工作树是本地设置, 官方没有提供像 `.gitmodule` 那样的版本管理功能
 
@@ -156,7 +158,7 @@ echo /build/html  >> docs/.gitignore
 
 然后也是正常构建推送就行了
 
-不过 [VSCode] 当前支持检测多个子模块但是不支持检测多个工作树(支持单个工作树)
+不过 [VSCode] 当前只支持工作树作为根目录, 不支持检测多个工作树
 
 需要手动敲命令或者不断切换文件夹来管理源代码
 
@@ -170,3 +172,4 @@ echo /build/html  >> docs/.gitignore
 [github pages]: https://pages.github.com/
 [git lfs]: https://git-lfs.github.com/
 [pandoc]: https://pandoc.org/
+[jekyll]: https://jekyllrb.com/
