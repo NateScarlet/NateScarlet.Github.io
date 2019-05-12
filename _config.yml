@@ -43,3 +43,4 @@ defaults:
       path: '_posts'
     values:
       comments: true
+      cc: by-nc-sa
