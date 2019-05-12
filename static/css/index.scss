@@ -319,4 +319,7 @@ blockquote:last-child {
   .post article ul {
     padding-left: 25px;
   }
+  * {
+    word-break: break-all;
+  }
 }
