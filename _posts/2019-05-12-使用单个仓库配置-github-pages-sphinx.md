@@ -159,8 +159,8 @@ Github 检测到 `gh-pages` 分支会自动启用 [GitHub Pages] 托管。
 在 master 分支创建工作树并且关联分支:
 
 ```shell
-git worktree add --checkout docs docs
-git worktree add --checkout docs/build/html gh-pages
+git worktree add docs docs
+git worktree add docs/build/html gh-pages
 # 添加文件夹到 .gitignore
 echo /docs  >> .gitignore
 echo /build/html  >> docs/.gitignore
