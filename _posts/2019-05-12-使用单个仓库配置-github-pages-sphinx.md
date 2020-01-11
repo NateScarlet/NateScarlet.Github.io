@@ -172,6 +172,9 @@ echo /build/html  >> docs/.gitignore
 不支持检测多个工作树。
 需要手动敲命令或者不断切换文件夹来管理源代码。
 
+如果不需要保存部署记录，可每次都初始化新的储藏库然后强行推送。
+参考 [VuePress 文档](https://vuepress.vuejs.org/zh/guide/deploy.html#github-pages)。
+
 [^1]: [Sphinx] 官方支持输出 epub 格式, 然后 epub 格式用 [pandoc] 就能转成 docx
 [^2]: <https://help.github.com/en/articles/configuring-a-publishing-source-for-github-pages>
 [^3]: <https://github.blog/2009-12-29-bypassing-jekyll-on-github-pages/>
