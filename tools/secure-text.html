@@ -1,0 +1,550 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SecureText - 文本加密解密工具</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
+      integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <link rel="stylesheet" href="./secure-text.css" />
+    <style type="text/tailwindcss">
+      @theme {
+        --color-primary: "#165DFF";
+        --color-secondary: "#7B61FF";
+        --color-accent: "#36D399";
+        --color-neutral: "#F3F4F6";
+        --color-dark: "#1F2937";
+      }
+      @layer utilities {
+        .content-auto {
+          content-visibility: auto;
+        }
+        .text-shadow {
+          text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .bg-gradient-blue {
+          background: linear-gradient(135deg, #165dff 0%, #7b61ff 100%);
+        }
+        .transition-all-300 {
+          transition: all 300ms ease-in-out;
+        }
+      }
+    </style>
+  </head>
+  <body class="font-inter bg-gray-50 min-h-screen flex flex-col">
+    <!-- 导航栏 -->
+    <header
+      class="bg-white shadow-md sticky top-0 z-50 transition-all duration-300"
+    >
+      <div
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
+      >
+        <div class="flex items-center space-x-2">
+          <i class="fa fa-lock text-primary text-2xl"></i>
+          <h1 class="text-xl md:text-2xl font-bold text-dark">SecureText</h1>
+        </div>
+        <button
+          class="md:hidden text-gray-700 focus:outline-none"
+          id="mobile-menu-button"
+        >
+          <i class="fa fa-bars text-xl"></i>
+        </button>
+      </div>
+    </header>
+
+    <!-- 主要内容区 -->
+    <main class="flex-grow container mx-auto px-4 py-8">
+      <!-- 加密解密区域 -->
+      <section
+        id="encrypt-decrypt"
+        class="bg-white rounded-2xl shadow-xl p-6 md:p-10 transform transition-all duration-500 hover:shadow-2xl"
+      >
+        <div class="space-y-8">
+          <div class="flex items-center mb-4">
+            <div
+              class="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center mr-3"
+            >
+              <i class="fa fa-lock text-primary"></i>
+            </div>
+            <h3 class="text-xl font-semibold text-dark">加密/解密文本</h3>
+          </div>
+
+          <div class="space-y-4">
+            <div>
+              <label
+                for="text-input"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >输入文本</label
+              >
+              <textarea
+                id="text-input"
+                class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 resize-none h-32"
+                placeholder="输入要加密或解密的文本..."
+              ></textarea>
+            </div>
+
+            <div>
+              <label
+                for="password"
+                class="block text-sm font-medium text-gray-700 mb-1"
+                >输入密码</label
+              >
+              <div class="relative">
+                <input
+                  type="password"
+                  id="password"
+                  class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200"
+                  placeholder="输入密码..."
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                  id="toggle-password"
+                >
+                  <i class="fa fa-eye-slash"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <button
+                id="encrypt-button"
+                class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center"
+              >
+                <i class="fa fa-lock mr-2"></i> 加密并生成链接
+              </button>
+              <button
+                id="decrypt-button"
+                class="bg-secondary hover:bg-secondary/90 text-white font-medium py-3 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center"
+              >
+                <i class="fa fa-unlock-alt mr-2"></i> 解密文本
+              </button>
+            </div>
+
+            <div id="encrypted-result-container" class="hidden mt-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >加密结果</label
+              >
+              <div class="relative">
+                <textarea
+                  id="encrypted-result"
+                  class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 resize-none h-20"
+                  readonly=""
+                ></textarea>
+                <button
+                  type="button"
+                  class="absolute right-3 top-3 bg-white border border-gray-300 rounded-md px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  id="copy-encrypted-result"
+                >
+                  复制结果
+                </button>
+              </div>
+            </div>
+
+            <div id="share-links-container" class="hidden mt-4 space-y-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >分享链接</label
+              >
+
+              <div class="relative">
+                <input
+                  type="text"
+                  id="web-url"
+                  class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200"
+                  readonly=""
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-md px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  id="copy-web-url"
+                >
+                  复制网页链接
+                </button>
+              </div>
+
+              <div class="relative">
+                <input
+                  type="text"
+                  id="protocol-url"
+                  class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200"
+                  readonly=""
+                />
+                <button
+                  type="button"
+                  class="absolute right-3 top-1/2 transform -translate-y-1/2 bg-white border border-gray-300 rounded-md px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  id="copy-protocol-url"
+                >
+                  复制协议链接
+                </button>
+              </div>
+
+              <div class="text-sm text-gray-500">
+                <i class="fa fa-info-circle mr-1"></i>
+                <span>网页链接：可在任何浏览器中打开</span>
+                <br />
+                <i class="fa fa-link mr-1"></i>
+                <span>协议链接：需要注册协议处理程序后才能直接打开应用</span>
+              </div>
+            </div>
+
+            <div id="decrypted-result-container" class="hidden mt-4">
+              <label class="block text-sm font-medium text-gray-700 mb-1"
+                >解密结果</label
+              >
+              <div class="relative">
+                <textarea
+                  id="decrypted-result"
+                  class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 resize-none h-20"
+                  readonly=""
+                ></textarea>
+                <button
+                  type="button"
+                  class="absolute right-3 top-3 bg-white border border-gray-300 rounded-md px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                  id="copy-decrypted-result"
+                >
+                  复制结果
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <div id="protocol-registration" class="mt-8">
+            <div id="protocol-button-container" class="hidden">
+              <button
+                id="register-protocol-button"
+                class="w-full bg-accent hover:bg-accent/90 text-white font-medium py-3 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center"
+              >
+                <i class="fa fa-link mr-2"></i> 注册协议处理程序
+              </button>
+            </div>
+            <div
+              id="protocol-status"
+              class="mt-2 text-sm text-gray-500 text-center"
+            >
+              <i class="fa fa-info-circle mr-1"></i>
+              <span id="protocol-message">检测浏览器对协议注册的支持...</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- 通知组件 -->
+    <div
+      id="notification"
+      class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 transform translate-y-20 opacity-0 transition-all duration-300 z-50 max-w-sm"
+    >
+      <div class="flex items-start">
+        <div id="notification-icon-container" class="flex-shrink-0 mt-0.5">
+          <i
+            id="notification-icon"
+            class="fa fa-check-circle text-green-500 text-xl"
+          ></i>
+        </div>
+        <div class="ml-3">
+          <h3 id="notification-title" class="text-sm font-medium text-gray-800">
+            操作成功
+          </h3>
+          <div id="notification-message" class="mt-1 text-sm text-gray-600">
+            文本已复制到剪贴板
+          </div>
+        </div>
+        <button
+          id="close-notification"
+          class="ml-auto flex-shrink-0 flex items-center justify-center h-5 w-5 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 focus:outline-none"
+        >
+          <i class="fa fa-times text-xs"></i>
+        </button>
+      </div>
+    </div>
+
+    <script>
+      const scheme = "web+encrypted";
+      // 移动端菜单切换
+      document
+        .getElementById("mobile-menu-button")
+        .addEventListener("click", function () {
+          const mobileMenu = document.getElementById("mobile-menu");
+          mobileMenu.classList.toggle("hidden");
+        });
+
+      // 导航栏滚动效果
+      window.addEventListener("scroll", function () {
+        const header = document.querySelector("header");
+        if (window.scrollY > 50) {
+          header.classList.add("py-2");
+          header.classList.add("shadow-lg");
+        } else {
+          header.classList.remove("py-2");
+          header.classList.remove("shadow-lg");
+        }
+      });
+
+      // 密码显示/隐藏切换
+      document
+        .getElementById("toggle-password")
+        .addEventListener("click", function () {
+          const input = document.getElementById("password");
+          const type =
+            input.getAttribute("type") === "password" ? "text" : "password";
+          input.setAttribute("type", type);
+
+          // 切换图标
+          if (type === "text") {
+            this.innerHTML = '<i class="fa fa-eye"></i>';
+          } else {
+            this.innerHTML = '<i class="fa fa-eye-slash"></i>';
+          }
+        });
+
+      // 加密函数
+      document
+        .getElementById("encrypt-button")
+        .addEventListener("click", function () {
+          const text = document.getElementById("text-input").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          if (!text) {
+            showNotification("错误", "请输入要加密的文本", "error");
+            return;
+          }
+
+          if (!password) {
+            showNotification("错误", "请输入加密密码", "error");
+            return;
+          }
+
+          try {
+            // 使用AES加密
+            const encrypted = CryptoJS.AES.encrypt(text, password).toString();
+
+            // 显示加密结果
+            document.getElementById("encrypted-result").value = encrypted;
+            document
+              .getElementById("encrypted-result-container")
+              .classList.remove("hidden");
+            document
+              .getElementById("decrypted-result-container")
+              .classList.add("hidden");
+
+            // 生成两种格式的分享链接
+            const encodedText = encodeURIComponent(encrypted);
+
+            // 生成协议链接
+            const protocolUrl = `${scheme}:aes,${encodedText}`;
+            document.getElementById("protocol-url").value = protocolUrl;
+
+            // 生成网页链接
+            const webUrl = new URL(
+              `?url=${encodeURIComponent(protocolUrl)}`,
+              location.href
+            );
+            document.getElementById("web-url").value = webUrl.toString();
+
+            // 显示链接容器
+            document
+              .getElementById("share-links-container")
+              .classList.remove("hidden");
+
+            showNotification("成功", "文本已加密并生成分享链接", "success");
+          } catch (error) {
+            console.error("Encryption error:", error);
+            showNotification("加密失败", "发生了一个错误，请重试", "error");
+          }
+        });
+
+      // 解密函数
+      document
+        .getElementById("decrypt-button")
+        .addEventListener("click", function () {
+          let text = document.getElementById("text-input").value.trim();
+          const password = document.getElementById("password").value.trim();
+
+          if (!text) {
+            showNotification("错误", "请输入要解密的文本", "error");
+            return;
+          }
+
+          if (!password) {
+            showNotification("错误", "请输入解密密码", "error");
+            return;
+          }
+
+          // 检查是否是自定义协议链接
+          try {
+            // 解码URI
+            text = decodeURIComponent(text);
+
+            // 使用AES解密
+            const bytes = CryptoJS.AES.decrypt(text, password);
+            const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+
+            if (!decrypted) {
+              throw new Error("解密失败，可能密码错误");
+            }
+
+            // 显示解密结果
+            document.getElementById("decrypted-result").value = decrypted;
+            document
+              .getElementById("decrypted-result-container")
+              .classList.remove("hidden");
+            document
+              .getElementById("encrypted-result-container")
+              .classList.add("hidden");
+            document
+              .getElementById("share-links-container")
+              .classList.add("hidden");
+
+            showNotification("成功", "文本已成功解密", "success");
+          } catch (error) {
+            console.error("Decryption error:", error);
+            showNotification("解密失败", "密码可能不正确或文本已损坏", "error");
+          }
+        });
+
+      // 复制功能
+      document
+        .getElementById("copy-encrypted-result")
+        .addEventListener("click", function () {
+          copyToClipboard("encrypted-result", "加密结果已复制到剪贴板");
+        });
+
+      document
+        .getElementById("copy-web-url")
+        .addEventListener("click", function () {
+          copyToClipboard("web-url", "网页链接已复制到剪贴板");
+        });
+
+      document
+        .getElementById("copy-protocol-url")
+        .addEventListener("click", function () {
+          copyToClipboard("protocol-url", "协议链接已复制到剪贴板");
+        });
+
+      document
+        .getElementById("copy-decrypted-result")
+        .addEventListener("click", function () {
+          copyToClipboard("decrypted-result", "解密结果已复制到剪贴板");
+        });
+
+      function copyToClipboard(elementId, message) {
+        const element = document.getElementById(elementId);
+        element.select();
+        document.execCommand("copy");
+        showNotification("成功", message, "success");
+      }
+
+      // 显示通知
+      function showNotification(title, message, type = "success") {
+        const notification = document.getElementById("notification");
+        const notificationTitle = document.getElementById("notification-title");
+        const notificationMessage = document.getElementById(
+          "notification-message"
+        );
+        const notificationIcon = document.getElementById("notification-icon");
+        const notificationIconContainer = document.getElementById(
+          "notification-icon-container"
+        );
+
+        // 设置通知内容
+        notificationTitle.textContent = title;
+        notificationMessage.textContent = message;
+
+        // 设置通知图标和颜色
+        if (type === "success") {
+          notificationIcon.className =
+            "fa fa-check-circle text-green-500 text-xl";
+          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
+        } else if (type === "error") {
+          notificationIcon.className =
+            "fa fa-exclamation-circle text-red-500 text-xl";
+          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
+        } else if (type === "warning") {
+          notificationIcon.className =
+            "fa fa-exclamation-triangle text-yellow-500 text-xl";
+          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
+        } else if (type === "info") {
+          notificationIcon.className =
+            "fa fa-info-circle text-blue-500 text-xl";
+          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
+        }
+
+        // 显示通知
+        notification.classList.remove("translate-y-20", "opacity-0");
+
+        // 自动关闭
+        setTimeout(() => {
+          closeNotification();
+        }, 5000);
+      }
+
+      // 关闭通知
+      document
+        .getElementById("close-notification")
+        .addEventListener("click", closeNotification);
+
+      function closeNotification() {
+        const notification = document.getElementById("notification");
+        notification.classList.add("translate-y-20", "opacity-0");
+      }
+
+      // 注册协议处理程序
+      document
+        .getElementById("register-protocol-button")
+        .addEventListener("click", function () {
+          if (navigator.registerProtocolHandler) {
+            navigator.registerProtocolHandler(
+              scheme,
+              window.location.href.split("?")[0] + "?url=%s",
+              "SecureText 协议处理程序"
+            );
+            showNotification("成功", "协议处理程序已注册！", "success");
+            document.getElementById("protocol-status").innerHTML =
+              '<i class="fa fa-check-circle text-green-500 mr-1"></i> 协议处理程序已成功注册';
+          } else {
+            showNotification("错误", "您的浏览器不支持自定义协议注册", "error");
+          }
+        });
+
+      // 页面加载时检测协议注册支持
+      window.addEventListener("DOMContentLoaded", function () {
+        const protocolStatus = document.getElementById("protocol-status");
+        const protocolButtonContainer = document.getElementById(
+          "protocol-button-container"
+        );
+        const protocolMessage = document.getElementById("protocol-message");
+
+        if (navigator.registerProtocolHandler) {
+          protocolButtonContainer.classList.remove("hidden");
+          protocolMessage.textContent =
+            "点击上方按钮注册协议处理程序，以便从协议链接直接打开加密内容";
+        } else {
+          protocolMessage.innerHTML =
+            '<span class="text-red-500">您的浏览器不支持协议注册</span> - 只能使用网页链接分享';
+        }
+
+        // 检查是否从协议处理程序打开
+        const params = new URLSearchParams(window.location.search);
+        const protocolURL = params.get("url");
+
+        if (protocolURL) {
+          if (protocolURL.startsWith(scheme + ":aes,")) {
+            document.getElementById("text-input").value = decodeURIComponent(
+              protocolURL.substring(scheme.length + 5)
+            );
+            showNotification(
+              "提示",
+              "已从链接中提取加密文本，请输入密码进行解密",
+              "info"
+            );
+          } else {
+            showNotification("错误", "不支持的解密链接", "error");
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

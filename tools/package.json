@@ -1,0 +1,17 @@
+{
+  "name": "tools",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build:secure-text": "npx @tailwindcss/cli -i ./secure-text.tailwind.css  --content ./secure-text.html -o ./secure-text.css",
+    "build": "npm run build:secure-text"
+  },
+  "keywords": [],
+  "author": "",
+  "packageManager": "pnpm@10.12.4",
+  "dependencies": {
+    "@tailwindcss/cli": "^4.1.11",
+    "tailwindcss": "^4.1.11"
+  }
+}

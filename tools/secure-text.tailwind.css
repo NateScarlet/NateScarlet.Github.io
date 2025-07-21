@@ -1,0 +1,23 @@
+/* pnpx @tailwindcss/cli@latest -i .\secure-text.tailwind.css  --content .\secure-text.html -o .\secure-text.css */
+
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #165dff;
+  --color-secondary: #7b61ff;
+  --color-accent: #36d399;
+  --color-neutral: #f3f4f6;
+  --color-dark: #1f2937;
+}
+@utility content-auto {
+  content-visibility: auto;
+}
+@utility text-shadow {
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+@utility bg-gradient-blue {
+  background: linear-gradient(135deg, #165dff 0%, #7b61ff 100%);
+}
+@utility transition-all-300 {
+  transition: all 300ms ease-in-out;
+}
