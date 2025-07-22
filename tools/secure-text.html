@@ -1,3 +1,4 @@
+<!doctype html>
 <html lang="zh">
   <head>
     <meta charset="UTF-8" />
@@ -10,8 +11,11 @@
       referrerpolicy="no-referrer"
     ></script>
     <link
-      href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css"
       rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+      integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
     />
     <link rel="stylesheet" href="./secure-text.css" />
   </head>
@@ -105,6 +109,11 @@
               ></div>
             </div>
           </div>
+          <!-- 解密区域通知容器 -->
+          <div
+            id="decrypt-notification"
+            class="hidden p-4 rounded-md mb-4"
+          ></div>
         </div>
       </section>
 
@@ -178,36 +187,27 @@
               ></div>
             </div>
           </div>
+          <!-- 加密区域通知容器 -->
+          <div
+            id="encrypt-notification"
+            class="hidden p-4 rounded-md mb-4"
+          ></div>
         </div>
       </section>
     </main>
 
-    <!-- 通知组件 -->
+    <!-- 加载提示元素 -->
     <div
-      id="notification"
-      class="fixed bottom-4 right-4 bg-white rounded-lg shadow-lg p-4 transform translate-y-20 opacity-0 transition-all duration-300 z-50 max-w-sm"
+      id="loading-modal"
+      class="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/50 font-sans"
     >
-      <div class="flex items-start">
-        <div id="notification-icon-container" class="flex-shrink-0 mt-0.5">
-          <i
-            id="notification-icon"
-            class="fa fa-check-circle text-green-500 text-xl"
-          ></i>
+      <div class="bg-white p-8 rounded-lg shadow-lg">
+        <div class="flex items-center justify-center">
+          <div
+            class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-primary mr-4"
+          ></div>
+          <p class="text-lg font-bold text-center">正在处理，请稍候...</p>
         </div>
-        <div class="ml-3">
-          <h3 id="notification-title" class="text-sm font-medium text-gray-800">
-            操作成功
-          </h3>
-          <div id="notification-message" class="mt-1 text-sm text-gray-600">
-            文本已复制到剪贴板
-          </div>
-        </div>
-        <button
-          id="close-notification"
-          class="ml-auto flex-shrink-0 flex items-center justify-center h-5 w-5 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200 focus:outline-none"
-        >
-          <i class="fa fa-times text-xs"></i>
-        </button>
       </div>
     </div>
 
@@ -224,38 +224,82 @@
         }
       });
 
+      let passwordVisible = false;
+      let loadingCount = 0;
+      function render() {
+        try {
+          for (const passwordInput of [
+            document.getElementById("password-encrypt"),
+            document.getElementById("password-decrypt"),
+          ]) {
+            if (passwordInput instanceof HTMLInputElement) {
+              passwordInput.type = passwordVisible ? "text" : "password";
+              const button =
+                passwordInput.parentElement.querySelector("button");
+              if (button) {
+                if (passwordVisible) {
+                  button.innerHTML = '<i class="fa fa-eye"></i>';
+                } else {
+                  button.innerHTML = '<i class="fa fa-eye-slash"></i>';
+                }
+              }
+            }
+          }
+
+          let hasEncryptedParams = false;
+          if (location.hash.startsWith("#")) {
+            const params = new URLSearchParams(
+              window.location.hash.substring(1)
+            );
+            hasEncryptedParams =
+              params.get("c") && params.get("s") && params.get("it");
+          }
+          // 显示或隐藏解密区域
+          if (hasEncryptedParams) {
+            const el = document.getElementById("decrypt");
+            if (el.classList.contains("hidden")) {
+              el.classList.remove("hidden");
+              document.getElementById("password-decrypt").focus();
+            }
+          } else {
+            document.getElementById("decrypt").classList.add("hidden");
+          }
+
+          const loadingModal = document.getElementById("loading-modal");
+          if (loadingCount > 0) {
+            loadingModal.classList.remove("hidden");
+          } else {
+            loadingModal.classList.add("hidden");
+          }
+        } catch (err) {
+          console.log("Render Error:", err);
+        }
+      }
+
+      function waitNextFrame() {
+        return new Promise((resolve, reject) => {
+          try {
+            setTimeout(resolve, 100);
+          } catch (err) {
+            reject(err);
+          }
+        });
+      }
+
       // 密码显示/隐藏切换（加密）
       document
         .getElementById("toggle-password-encrypt")
         .addEventListener("click", function () {
-          const input = document.getElementById("password-encrypt");
-          const type =
-            input.getAttribute("type") === "password" ? "text" : "password";
-          input.setAttribute("type", type);
-
-          // 切换图标
-          if (type === "text") {
-            this.innerHTML = '<i class="fa fa-eye"></i>';
-          } else {
-            this.innerHTML = '<i class="fa fa-eye-slash"></i>';
-          }
+          passwordVisible = !passwordVisible;
+          render();
         });
 
       // 密码显示/隐藏切换（解密）
       document
         .getElementById("toggle-password-decrypt")
         .addEventListener("click", function () {
-          const input = document.getElementById("password-decrypt");
-          const type =
-            input.getAttribute("type") === "password" ? "text" : "password";
-          input.setAttribute("type", type);
-
-          // 切换图标
-          if (type === "text") {
-            this.innerHTML = '<i class="fa fa-eye"></i>';
-          } else {
-            this.innerHTML = '<i class="fa fa-eye-slash"></i>';
-          }
+          passwordVisible = !passwordVisible;
+          render();
         });
 
       /**
@@ -289,12 +333,11 @@
           iv: iv,
         });
 
-        // 将IV和密文的Base64合并（IV固定24个Base64字符）
-        const ivBase64 = iv.toString(CryptoJS.enc.Base64); // 16字节 → 24字符
-        const ciphertextBase64 = encrypted.ciphertext.toString(
-          CryptoJS.enc.Base64
-        );
-        const combined = ivBase64 + ciphertextBase64; // 合并IV和密文
+        // 合并二进制IV和密文数据(先iv后ciphertext)
+        const rawCombined = iv.clone().concat(encrypted.ciphertext);
+
+        // 对整个合并数据执行Base64编码
+        const combined = rawCombined.toString(CryptoJS.enc.Base64);
 
         return {
           combined: combined,
@@ -304,21 +347,53 @@
       }
 
       /**
+       * @param {string} base64 - 标准 base64 编码的数据
+       * @returns {string} - base64 url 编码的数据
+       */
+      function toBase64URL(base64) {
+        return base64.replace(/\+/g, "-").replace(/\//g, "_").replace(/=/g, "");
+      }
+
+      /**
+       * 将 Base64 URL 编码的字符串转换为标准 Base64 编码
+       * @param {string} base64url - Base64 URL 编码的字符串
+       * @returns {string} - 标准 Base64 编码的字符串
+       */
+      function fromBase64URL(base64url) {
+        // 替换 URL 安全字符回标准字符
+        let base64 = base64url.replace(/-/g, "+").replace(/_/g, "/");
+
+        // 计算所需填充长度（使总长度为4的倍数）
+        const padLength = (4 - (base64.length % 4)) % 4;
+
+        // 添加必要的填充等号
+        return base64 + "=".repeat(padLength);
+      }
+
+      /**
        * 使用PBKDF2密钥派生和解密AES加密的文本
        * @param {Object} params - 包含加密参数的对象
        * @param {string} password - 密码
        * @returns {string} - 解密后的明文文本
        */
       function decryptText(params, password) {
-        // 拆分IV和密文（IV的Base64固定24字符）
-        const ivBase64 = params.combined.substring(0, 24);
-        const ciphertextBase64 = params.combined.substring(24);
+        // 整体解码combined数据
+        const rawCombined = CryptoJS.enc.Base64.parse(params.combined);
 
-        // 解析各参数
-        const ciphertext = CryptoJS.enc.Base64.parse(ciphertextBase64);
-        const iv = CryptoJS.enc.Base64.parse(ivBase64);
+        // 提取IV（前16字节）
+        const iv = CryptoJS.lib.WordArray.create(
+          rawCombined.words.slice(0, 4),
+          16
+        ); // 16字节 = 4 words
+
+        // 提取密文（16字节之后的所有数据）
+        const ciphertext = CryptoJS.lib.WordArray.create(
+          rawCombined.words.slice(4),
+          rawCombined.sigBytes - 16
+        );
+
         const salt = CryptoJS.enc.Base64.parse(params.salt);
-        const iterations = parseInt(params.iterations, 10);
+        const iterations = params.iterations;
         const keySize = 256 / 32;
 
         // 派生密钥
@@ -345,189 +420,225 @@
       // 加密按钮点击处理
       document
         .getElementById("encrypt-button")
-        .addEventListener("click", function () {
-          const text = document.getElementById("text-input").value.trim();
-          const password = document
-            .getElementById("password-encrypt")
-            .value.trim();
-
-          if (!text) {
-            showNotification("错误", "请输入要加密的文本", "error");
-            return;
-          }
-
-          if (!password) {
-            showNotification("错误", "请输入加密密码", "error");
-            return;
-          }
-
+        .addEventListener("click", async function () {
+          loadingCount += 1;
+          render();
+          await waitNextFrame();
           try {
-            // 调用加密函数
-            const encryptedData = encryptText(text, password);
+            const text = document.getElementById("text-input").value;
+            const password = document.getElementById("password-encrypt").value;
 
-            document
-              .getElementById("decrypted-result-container")
-              .classList.add("hidden");
+            if (!text) {
+              showNotification(
+                "错误",
+                "请输入要加密的文本",
+                "error",
+                "encrypt"
+              );
+              return;
+            }
 
-            // 生成网页链接（仅需3个参数）
-            const hashParams = new URLSearchParams();
-            hashParams.set("c", encryptedData.combined);
-            hashParams.set("s", encryptedData.salt);
-            hashParams.set("it", encryptedData.iterations);
-            const webUrl = new URL(location.pathname, location.href);
-            // 存在 hash 中，确保数据不会发往服务端
-            webUrl.hash = "#" + hashParams.toString();
+            if (!password) {
+              showNotification("错误", "请输入加密密码", "error", "encrypt");
+              return;
+            }
 
-            document.getElementById("web-url").textContent = webUrl.toString();
-            history.replaceState(undefined, undefined, webUrl);
+            try {
+              // 调用加密函数
+              const encryptedData = encryptText(text, password);
+              console.log(encryptedData);
+
+              document
+                .getElementById("decrypted-result-container")
+                .classList.add("hidden");
+
+              // 生成网页链接（仅需3个参数）
+              const hashParams = new URLSearchParams();
+              hashParams.set("c", toBase64URL(encryptedData.combined));
+              hashParams.set("s", toBase64URL(encryptedData.salt));
+              hashParams.set("it", encryptedData.iterations);
+              const webUrl = new URL(location.pathname, location.href);
+              // 存在 hash 中，确保数据不会发往服务端
+              webUrl.hash = "#" + hashParams.toString();
+
+              document.getElementById("web-url").textContent =
+                webUrl.toString();
+              history.replaceState(undefined, undefined, webUrl);
+              render();
+
+              // 显示链接容器
+              document
+                .getElementById("share-links-container")
+                .classList.remove("hidden");
+
+              showNotification(
+                "成功",
+                "文本已加密并生成分享链接",
+                "success",
+                "encrypt"
+              );
+            } catch (error) {
+              console.error("Encryption error:", error);
+              showNotification(
+                "加密失败",
+                "发生了一个错误，请重试",
+                "error",
+                "encrypt"
+              );
+            }
+          } finally {
+            loadingCount -= 1;
             render();
-
-            // 显示链接容器
-            document
-              .getElementById("share-links-container")
-              .classList.remove("hidden");
-
-            showNotification("成功", "文本已加密并生成分享链接", "success");
-          } catch (error) {
-            console.error("Encryption error:", error);
-            showNotification("加密失败", "发生了一个错误，请重试", "error");
           }
         });
-
       // 解密按钮点击处理
       document
         .getElementById("decrypt-button")
-        .addEventListener("click", function () {
-          // 从URL参数获取加密数据
-          const params = new URLSearchParams(window.location.hash.substring(1));
-
-          // 验证参数完整性
-          const encryptedData = {
-            combined: params.get("c"),
-            salt: params.get("s"),
-            iterations: params.get("it"),
-          };
-
-          const password = document
-            .getElementById("password-decrypt")
-            .value.trim();
-
-          // 验证必要参数
-          if (!encryptedData.combined) {
-            showNotification("错误", "请通过链接提供密文", "error");
-            return;
-          }
-
-          // 验证IV+密文格式是否正确（至少需要包含完整IV）
-          if (encryptedData.combined.length < 24) {
-            showNotification("错误", "密文格式不正确", "error");
-            return;
-          }
-
-          if (!encryptedData.salt || !encryptedData.iterations) {
-            showNotification(
-              "错误",
-              "加密参数不完整，请使用正确的分享链接",
-              "error"
-            );
-            return;
-          }
-
-          if (!password) {
-            showNotification("错误", "请输入解密密码", "error");
-            return;
-          }
-
+        .addEventListener("click", async function () {
+          loadingCount += 1;
           try {
-            // 调用解密函数
-            const decryptedText = decryptText(encryptedData, password);
-
-            // 显示解密结果
-            document.getElementById("decrypted-result").textContent =
-              decryptedText;
             document
               .getElementById("decrypted-result-container")
-              .classList.remove("hidden");
-            document
-              .getElementById("share-links-container")
               .classList.add("hidden");
+            render();
+            await waitNextFrame();
+            // 从URL参数获取加密数据
+            const params = new URLSearchParams(
+              window.location.hash.substring(1)
+            );
 
-            showNotification("成功", "文本已成功解密", "success");
-          } catch (error) {
-            console.error("Decryption error:", error);
-            showNotification("解密失败", "密码可能不正确或参数不完整", "error");
+            // 验证参数完整性
+            const encryptedData = {
+              combined: fromBase64URL(params.get("c")),
+              salt: fromBase64URL(params.get("s")),
+              iterations: parseInt(params.get("it"), 10),
+            };
+
+            console.debug(encryptedData);
+
+            const password = document.getElementById("password-decrypt").value;
+
+            // 验证必要参数
+            if (!encryptedData.combined) {
+              showNotification(
+                "错误",
+                "请通过链接提供密文",
+                "error",
+                "decrypt"
+              );
+              return;
+            }
+
+            // 验证IV+密文格式是否正确（至少需要包含完整IV）
+            if (encryptedData.combined.length < 24) {
+              showNotification("错误", "密文格式不正确", "error", "decrypt");
+              return;
+            }
+
+            if (
+              !encryptedData.salt ||
+              !Number.isFinite(encryptedData.iterations)
+            ) {
+              showNotification(
+                "错误",
+                "加密参数不完整，请使用正确的分享链接",
+                "error",
+                "decrypt"
+              );
+              return;
+            }
+
+            if (!password) {
+              showNotification("错误", "请输入解密密码", "error", "decrypt");
+              return;
+            }
+
+            try {
+              // 调用解密函数
+              const decryptedText = decryptText(encryptedData, password);
+
+              if (!decryptedText) {
+                throw new Error("解密失败，可能密码错误");
+              }
+
+              // 显示解密结果
+              document.getElementById("decrypted-result").textContent =
+                decryptedText;
+              document
+                .getElementById("decrypted-result-container")
+                .classList.remove("hidden");
+
+              showNotification("成功", "文本已成功解密", "success", "decrypt");
+            } catch (error) {
+              console.error("Decryption error:", error);
+              showNotification(
+                "解密失败",
+                "密码可能不正确或参数不完整",
+                "error",
+                "decrypt"
+              );
+            }
+          } finally {
+            loadingCount -= 1;
+            render();
           }
         });
 
       // 显示通知
-      function showNotification(title, message, type = "success") {
-        const notification = document.getElementById("notification");
-        const notificationTitle = document.getElementById("notification-title");
-        const notificationMessage = document.getElementById(
-          "notification-message"
-        );
-        const notificationIcon = document.getElementById("notification-icon");
-        const notificationIconContainer = document.getElementById(
-          "notification-icon-container"
-        );
+      function showNotification(
+        title,
+        message,
+        type = "success",
+        area = "encrypt"
+      ) {
+        const notification = document.getElementById(`${area}-notification`);
+        notification;
+        notification.innerHTML = `
+          <div class="flex items-center">
+            <div class="mr-3">
+              ${getIcon(type)}
+            </div>
+            <div>
+              <h3 class="text-sm font-medium">${title}</h3>
+              <p class="text-sm">${message}</p>
+            </div>
+          </div>
+        `;
 
-        // 设置通知内容
-        notificationTitle.textContent = title;
-        notificationMessage.textContent = message;
-
-        // 设置通知图标和颜色
-        if (type === "success") {
-          notificationIcon.className =
-            "fa fa-check-circle text-green-500 text-xl";
-          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
-        } else if (type === "error") {
-          notificationIcon.className =
-            "fa fa-exclamation-circle text-red-500 text-xl";
-          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
-        } else if (type === "warning") {
-          notificationIcon.className =
-            "fa fa-exclamation-triangle text-yellow-500 text-xl";
-          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
-        } else if (type === "info") {
-          notificationIcon.className =
-            "fa fa-info-circle text-blue-500 text-xl";
-          notificationIconContainer.className = "flex-shrink-0 mt-0.5";
+        let class_ = "p-4 rounded-md mb-4";
+        // 设置通知背景颜色
+        switch (type) {
+          case "success":
+            class_ += " bg-green-100 text-green-800";
+            break;
+          case "error":
+            class_ += " bg-red-100 text-red-800";
+            break;
+          case "warning":
+            class_ += " bg-yellow-100 text-yellow-800";
+            break;
+          case "info":
+            class_ += " bg-blue-100 text-blue-800";
+            break;
         }
-
-        // 显示通知
-        notification.classList.remove("translate-y-20", "opacity-0");
-
-        // 自动关闭
-        setTimeout(() => {
-          closeNotification();
-        }, 5000);
+        notification.setAttribute("class", class_);
       }
 
-      // 关闭通知
-      document
-        .getElementById("close-notification")
-        .addEventListener("click", closeNotification);
-
-      function closeNotification() {
-        const notification = document.getElementById("notification");
-        notification.classList.add("translate-y-20", "opacity-0");
-      }
-
-      function render() {
-        let hasEncryptedParams = false;
-        if (location.hash.startsWith("#")) {
-          const params = new URLSearchParams(window.location.hash.substring(1));
-          hasEncryptedParams =
-            params.get("c") && params.get("s") && params.get("it");
-        }
-        // 显示或隐藏解密区域
-        if (hasEncryptedParams) {
-          document.getElementById("decrypt").classList.remove("hidden");
-          document.getElementById("password-decrypt").focus();
-        } else {
-          document.getElementById("decrypt").classList.add("hidden");
+      function getIcon(type) {
+        switch (type) {
+          case "success":
+            return '<i class="fa fa-check-circle text-green-500 text-xl"></i>';
+          case "error":
+            return '<i class="fa fa-exclamation-circle text-red-500 text-xl"></i>';
+          case "warning":
+            return '<i class="fa fa-exclamation-triangle text-yellow-500 text-xl"></i>';
+          case "info":
+            return '<i class="fa fa-info-circle text-blue-500 text-xl"></i>';
+          default:
+            return "";
         }
       }
+
       window.addEventListener("hashchange", () => {
         render();
       });

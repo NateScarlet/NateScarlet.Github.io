@@ -1,4 +1,4 @@
-/* pnpx @tailwindcss/cli@latest -i .\secure-text.tailwind.css  --content .\secure-text.html -o .\secure-text.css */
+/* npx @tailwindcss/cli@latest -i .\secure-text.tailwind.css  --content .\secure-text.html -o .\secure-text.css */
 
 @import "tailwindcss";
 
