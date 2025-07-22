@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh">
   <head>
     <meta charset="UTF-8" />
@@ -31,9 +31,10 @@
     <!-- 主要内容区 -->
     <main class="font-sans flex-grow container mx-auto px-4 py-8">
       <!-- 解密区域 -->
-      <section
+      <form
         id="decrypt"
         class="hidden bg-white rounded-2xl shadow-xl p-6 md:p-10 transform transition-all duration-500 hover:shadow-2xl mb-8"
+        action="javascript:void(0)"
       >
         <div class="space-y-8">
           <div class="flex items-center mb-4">
@@ -88,6 +89,7 @@
 
             <button
               id="decrypt-button"
+              type="submit"
               class="bg-secondary hover:bg-secondary/90 text-white font-medium py-3 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center"
             >
               <i class="fa fa-unlock-alt mr-2"></i> 解密文本
@@ -99,7 +101,7 @@
               >
               <div
                 id="decrypted-result"
-                class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 resize-none h-20"
+                class="w-full p-3 border border-gray-300 rounded-lg bg-gray-50 focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all duration-200 min-h-20 whitespace-pre-wrap"
               ></div>
             </div>
           </div>
@@ -109,11 +111,12 @@
             class="hidden p-4 rounded-md mb-4"
           ></div>
         </div>
-      </section>
+      </form>
 
       <!-- 加密区域 -->
-      <section
+      <form
         id="encrypt"
+        action="javascript:void(0)"
         class="bg-white rounded-2xl shadow-xl p-6 md:p-10 transform transition-all duration-500 hover:shadow-2xl"
       >
         <div class="space-y-8">
@@ -165,6 +168,7 @@
 
             <button
               id="encrypt-button"
+              type="submit"
               class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-4 rounded-lg shadow transition-all duration-200 flex items-center justify-center"
             >
               <i class="fa fa-lock mr-2"></i> 加密并生成链接
@@ -187,7 +191,7 @@
             class="hidden p-4 rounded-md mb-4"
           ></div>
         </div>
-      </section>
+      </form>
     </main>
 
     <!-- 加载提示元素 -->
@@ -422,7 +426,9 @@
       }
 
       function toHash(encryptedData) {
-        return `#AES.${encryptedData.iterations.toString(36)}.${toBase64URL(encryptedData.combined)}`;
+        return `#AES.${encryptedData.iterations.toString(36)}.${toBase64URL(
+          encryptedData.combined
+        )}`;
       }
       /**
        * @param {string} hash - location.hash 的值
@@ -450,10 +456,10 @@
         }
       }
 
-      // 加密按钮点击处理
+      // 加密处理
       document
-        .getElementById("encrypt-button")
-        .addEventListener("click", async function () {
+        .getElementById("encrypt")
+        .addEventListener("submit", async function () {
           loadingCount += 1;
           render();
           try {
@@ -518,10 +524,10 @@
             render();
           }
         });
-      // 解密按钮点击处理
+      // 解密处理
       document
-        .getElementById("decrypt-button")
-        .addEventListener("click", async function () {
+        .getElementById("decrypt")
+        .addEventListener("submit", async function () {
           loadingCount += 1;
           try {
             document
