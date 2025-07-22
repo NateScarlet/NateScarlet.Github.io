@@ -240,16 +240,8 @@
             }
           }
 
-          let hasEncryptedParams = false;
-          if (location.hash.startsWith("#")) {
-            const params = new URLSearchParams(
-              window.location.hash.substring(1)
-            );
-            hasEncryptedParams =
-              params.get("c") && params.get("s") && params.get("it");
-          }
           // 显示或隐藏解密区域
-          if (hasEncryptedParams) {
+          if (location.hash.startsWith("#AES.")) {
             const el = document.getElementById("decrypt");
             if (el.classList.contains("hidden")) {
               el.classList.remove("hidden");
@@ -317,8 +309,10 @@
        * @returns {Promise<Object>} - 包含加密参数的对象
        */
       async function encryptText(plainText, password) {
-        // 生成随机盐值 (16字节)
-        const salt = crypto.getRandomValues(new Uint8Array(16));
+        // 生成iv (16字节)
+        const iv = crypto.getRandomValues(new Uint8Array(16));
+        // 因为每次都是从头生成密钥，所以直接用 iv 作为 salt，可以缩短网址
+        const salt = iv;
         const iterations = 300000;
 
         // 准备密钥派生参数
@@ -343,9 +337,6 @@
           true,
           ["encrypt"]
         );
-
-        // 生成随机IV (16字节)
-        const iv = crypto.getRandomValues(new Uint8Array(16));
 
         // 加密文本
         const encryptedData = await crypto.subtle.encrypt(
@@ -376,11 +367,11 @@
       async function decryptText(params, password) {
         // 解码参数
         const combined = base64ToArrayBuffer(params.combined);
-        const salt = base64ToArrayBuffer(params.salt);
 
         // 分离IV和密文
         const iv = combined.slice(0, 16);
         const ciphertext = combined.slice(16);
+        const salt = params.salt ? base64ToArrayBuffer(params.salt) : iv;
 
         // 准备密钥派生参数
         const keyMaterial = await crypto.subtle.importKey(
@@ -430,6 +421,35 @@
         return bytes.buffer;
       }
 
+      function toHash(encryptedData) {
+        return `#AES.${encryptedData.iterations.toString(36)}.${toBase64URL(encryptedData.combined)}`;
+      }
+      /**
+       * @param {string} hash - location.hash 的值
+       */
+      function fromHash(hash) {
+        if (!hash.startsWith("#")) {
+          return;
+        }
+        const parts = hash.substring(1).split(".");
+        switch (parts[0]) {
+          case "AES":
+            if (parts.length !== 3) {
+              throw new Error(`should be 3 parts, got ${parts.length}`);
+            }
+            const iterations = Number.parseInt(parts[1], 36);
+            if (!Number.isFinite(iterations)) {
+              throw new Error("invalid iterations");
+            }
+            return {
+              combined: fromBase64URL(parts[2]),
+              iterations,
+            };
+          default:
+            throw new Error("unsupported method", parts[0]);
+        }
+      }
+
       // 加密按钮点击处理
       document
         .getElementById("encrypt-button")
@@ -463,14 +483,10 @@
                 .getElementById("decrypted-result-container")
                 .classList.add("hidden");
 
-              // 生成网页链接（仅需3个参数）
-              const hashParams = new URLSearchParams();
-              hashParams.set("c", toBase64URL(encryptedData.combined));
-              hashParams.set("s", toBase64URL(encryptedData.salt));
-              hashParams.set("it", encryptedData.iterations);
-              const webUrl = new URL(location.pathname, location.href);
+              // 生成网页链接
               // 存在 hash 中，确保数据不会发往服务端
-              webUrl.hash = "#" + hashParams.toString();
+              const webUrl = new URL(location.pathname, location.href);
+              webUrl.hash = toHash(encryptedData);
 
               document.getElementById("web-url").textContent =
                 webUrl.toString();
@@ -513,16 +529,7 @@
               .classList.add("hidden");
             render();
             // 从URL参数获取加密数据
-            const params = new URLSearchParams(
-              window.location.hash.substring(1)
-            );
-
-            // 验证参数完整性
-            const encryptedData = {
-              combined: fromBase64URL(params.get("c")),
-              salt: fromBase64URL(params.get("s")),
-              iterations: parseInt(params.get("it"), 10),
-            };
+            const encryptedData = fromHash(location.hash);
 
             const password = document.getElementById("password-decrypt").value;
 
@@ -538,15 +545,13 @@
             }
 
             // 验证IV+密文格式是否正确（至少需要包含完整IV）
+            // 24　是最小的base64长度，仅 iv 的 16 字节编码成 base64 就会有24
             if (encryptedData.combined.length < 24) {
               showNotification("错误", "密文格式不正确", "error", "decrypt");
               return;
             }
 
-            if (
-              !encryptedData.salt ||
-              !Number.isFinite(encryptedData.iterations)
-            ) {
+            if (!Number.isFinite(encryptedData.iterations)) {
               showNotification(
                 "错误",
                 "加密参数不完整，请使用正确的分享链接",
@@ -581,11 +586,14 @@
               console.error("Decryption error:", error);
               showNotification(
                 "解密失败",
-                "密码可能不正确或参数不完整",
+                "密码可能不正确",
                 "error",
                 "decrypt"
               );
             }
+          } catch (error) {
+            console.error("Parsing error:", error);
+            showNotification("解密失败", "链接不合法", "error", "decrypt");
           } finally {
             loadingCount -= 1;
             render();
@@ -600,7 +608,6 @@
         area = "encrypt"
       ) {
         const notification = document.getElementById(`${area}-notification`);
-        notification;
         notification.innerHTML = `
           <div class="flex items-center">
             <div class="mr-3">
