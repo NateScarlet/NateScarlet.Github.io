@@ -4,12 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SecureText - 文本加密解密工具</title>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"
-      integrity="sha512-a+SUDuwNzXDvz4XrIcXHuCf089/iJAoN4lmrXJg18XnduKK6YlDHNRalv4yd1N40OKI80tFidF+rqTFKGPoWFQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
@@ -272,18 +266,8 @@
             loadingModal.classList.add("hidden");
           }
         } catch (err) {
-          console.log("Render Error:", err);
+          console.error("Render Error:", err);
         }
-      }
-
-      function waitNextFrame() {
-        return new Promise((resolve, reject) => {
-          try {
-            setTimeout(resolve, 100);
-          } catch (err) {
-            reject(err);
-          }
-        });
       }
 
       // 密码显示/隐藏切换（加密）
@@ -301,50 +285,6 @@
           passwordVisible = !passwordVisible;
           render();
         });
-
-      /**
-       * 使用PBKDF2密钥派生和AES加密文本
-       * @param {string} plainText - 明文文本
-       * @param {string} password - 密码
-       * @returns {Object} - 包含加密参数的对象
-       */
-      function encryptText(plainText, password) {
-        // 生成随机盐值 (16字节)
-        const salt = CryptoJS.lib.WordArray.random(16);
-        // 迭代次数
-        const iterations = 300000;
-        // 密钥长度 (256位)
-        const keySize = 256 / 32;
-
-        // 使用PBKDF2进行密钥派生
-        const key = CryptoJS.PBKDF2(password, salt, {
-          keySize: keySize,
-          iterations: iterations,
-          hasher: CryptoJS.algo.SHA256,
-        });
-
-        // 生成随机IV (16字节)
-        const iv = CryptoJS.lib.WordArray.random(16);
-
-        // 使用派生的密钥进行AES加密
-        const encrypted = CryptoJS.AES.encrypt(plainText, key, {
-          mode: CryptoJS.mode.CBC,
-          padding: CryptoJS.pad.Pkcs7,
-          iv: iv,
-        });
-
-        // 合并二进制IV和密文数据(先iv后ciphertext)
-        const rawCombined = iv.clone().concat(encrypted.ciphertext);
-
-        // 对整个合并数据执行Base64编码
-        const combined = rawCombined.toString(CryptoJS.enc.Base64);
-
-        return {
-          combined: combined,
-          salt: salt.toString(CryptoJS.enc.Base64),
-          iterations: iterations,
-        };
-      }
 
       /**
        * @param {string} base64 - 标准 base64 编码的数据
@@ -371,50 +311,123 @@
       }
 
       /**
+       * 使用PBKDF2密钥派生和AES加密文本（Web Crypto API版）
+       * @param {string} plainText - 明文文本
+       * @param {string} password - 密码
+       * @returns {Promise<Object>} - 包含加密参数的对象
+       */
+      async function encryptText(plainText, password) {
+        // 生成随机盐值 (16字节)
+        const salt = crypto.getRandomValues(new Uint8Array(16));
+        const iterations = 300000;
+
+        // 准备密钥派生参数
+        const keyMaterial = await crypto.subtle.importKey(
+          "raw",
+          new TextEncoder().encode(password),
+          { name: "PBKDF2" },
+          false,
+          ["deriveKey"]
+        );
+
+        // 派生AES密钥
+        const key = await crypto.subtle.deriveKey(
+          {
+            name: "PBKDF2",
+            salt: salt,
+            iterations: iterations,
+            hash: "SHA-256",
+          },
+          keyMaterial,
+          { name: "AES-CBC", length: 256 },
+          true,
+          ["encrypt"]
+        );
+
+        // 生成随机IV (16字节)
+        const iv = crypto.getRandomValues(new Uint8Array(16));
+
+        // 加密文本
+        const encryptedData = await crypto.subtle.encrypt(
+          { name: "AES-CBC", iv },
+          key,
+          new TextEncoder().encode(plainText)
+        );
+
+        // 合并IV和密文
+        const combined = new Uint8Array(iv.length + encryptedData.byteLength);
+        combined.set(iv, 0);
+        combined.set(new Uint8Array(encryptedData), iv.length);
+
+        // 转换为Base64
+        return {
+          combined: arrayBufferToBase64(combined),
+          salt: arrayBufferToBase64(salt),
+          iterations: iterations,
+        };
+      }
+
+      /**
        * 使用PBKDF2密钥派生和解密AES加密的文本
        * @param {Object} params - 包含加密参数的对象
        * @param {string} password - 密码
-       * @returns {string} - 解密后的明文文本
+       * @returns {Promise<string>} - 解密后的明文文本
        */
-      function decryptText(params, password) {
-        // 整体解码combined数据
-        const rawCombined = CryptoJS.enc.Base64.parse(params.combined);
+      async function decryptText(params, password) {
+        // 解码参数
+        const combined = base64ToArrayBuffer(params.combined);
+        const salt = base64ToArrayBuffer(params.salt);
 
-        // 提取IV（前16字节）
-        const iv = CryptoJS.lib.WordArray.create(
-          rawCombined.words.slice(0, 4),
-          16
-        ); // 16字节 = 4 words
+        // 分离IV和密文
+        const iv = combined.slice(0, 16);
+        const ciphertext = combined.slice(16);
 
-        // 提取密文（16字节之后的所有数据）
-        const ciphertext = CryptoJS.lib.WordArray.create(
-          rawCombined.words.slice(4),
-          rawCombined.sigBytes - 16
+        // 准备密钥派生参数
+        const keyMaterial = await crypto.subtle.importKey(
+          "raw",
+          new TextEncoder().encode(password),
+          { name: "PBKDF2" },
+          false,
+          ["deriveKey"]
         );
-
-        const salt = CryptoJS.enc.Base64.parse(params.salt);
-        const iterations = params.iterations;
-        const keySize = 256 / 32;
 
         // 派生密钥
-        const key = CryptoJS.PBKDF2(password, salt, {
-          keySize: keySize,
-          iterations: iterations,
-          hasher: CryptoJS.algo.SHA256,
-        });
-
-        // 解密
-        const decrypted = CryptoJS.AES.decrypt(
-          { ciphertext: ciphertext },
-          key,
+        const key = await crypto.subtle.deriveKey(
           {
-            mode: CryptoJS.mode.CBC,
-            padding: CryptoJS.pad.Pkcs7,
-            iv: iv,
-          }
+            name: "PBKDF2",
+            salt,
+            iterations: params.iterations,
+            hash: "SHA-256",
+          },
+          keyMaterial,
+          { name: "AES-CBC", length: 256 },
+          true,
+          ["decrypt"]
         );
 
-        return decrypted.toString(CryptoJS.enc.Utf8);
+        // 解密
+        const decrypted = await crypto.subtle.decrypt(
+          { name: "AES-CBC", iv },
+          key,
+          ciphertext
+        );
+
+        return new TextDecoder().decode(decrypted);
+      }
+
+      // 辅助函数：ArrayBuffer转Base64
+      function arrayBufferToBase64(buffer) {
+        return btoa(String.fromCharCode(...new Uint8Array(buffer)));
+      }
+
+      // 辅助函数：Base64转ArrayBuffer
+      function base64ToArrayBuffer(base64) {
+        const binaryString = atob(base64);
+        const bytes = new Uint8Array(binaryString.length);
+        for (let i = 0; i < binaryString.length; i++) {
+          bytes[i] = binaryString.charCodeAt(i);
+        }
+        return bytes.buffer;
       }
 
       // 加密按钮点击处理
@@ -423,7 +436,6 @@
         .addEventListener("click", async function () {
           loadingCount += 1;
           render();
-          await waitNextFrame();
           try {
             const text = document.getElementById("text-input").value;
             const password = document.getElementById("password-encrypt").value;
@@ -445,8 +457,7 @@
 
             try {
               // 调用加密函数
-              const encryptedData = encryptText(text, password);
-              console.log(encryptedData);
+              const encryptedData = await encryptText(text, password);
 
               document
                 .getElementById("decrypted-result-container")
@@ -501,7 +512,6 @@
               .getElementById("decrypted-result-container")
               .classList.add("hidden");
             render();
-            await waitNextFrame();
             // 从URL参数获取加密数据
             const params = new URLSearchParams(
               window.location.hash.substring(1)
@@ -513,8 +523,6 @@
               salt: fromBase64URL(params.get("s")),
               iterations: parseInt(params.get("it"), 10),
             };
-
-            console.debug(encryptedData);
 
             const password = document.getElementById("password-decrypt").value;
 
@@ -555,7 +563,7 @@
 
             try {
               // 调用解密函数
-              const decryptedText = decryptText(encryptedData, password);
+              const decryptedText = await decryptText(encryptedData, password);
 
               if (!decryptedText) {
                 throw new Error("解密失败，可能密码错误");
